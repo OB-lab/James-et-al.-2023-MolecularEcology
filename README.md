@@ -8,7 +8,7 @@ We ran basic quality control reports for each file using FastQC
 > FastQC code here
 
 A report for all individuals was compiled using MultiQC (which metrics were checked?)
-'''MultiQC code here'''
+```MultiQC code here```
 
 
 ## Alignment
