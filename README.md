@@ -2,7 +2,7 @@
 Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads.
 
 ## Quality filtering
-We received forward and reverse files for each individual, cleaned by BGI to remove barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
+We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
 
 We ran basic quality control reports for each file using FastQC
 > FastQC code here
