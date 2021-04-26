@@ -16,7 +16,7 @@ A report for all individuals was compiled using MultiQC (which metrics were chec
 The *Senecio lautus* reference genome was indexed using BWA.
 > bwa index reference.fasta
 
-For each individual, we aligned reads to the reference genome with the BWA-MEM v0.7.13 algorithm under default parameter. We also added read groups during this step. The resulting BAM files were sorted using Samtools v1.3.
+For each individual, we aligned reads to the reference genome and added read groups using the BWA-MEM v0.7.13 algorithm under default parameters. The resulting BAM files were sorted using Samtools v1.3.
 
 > bwa mem \
 > -M -R "@RG\tSM:ind1\tID:ind1\tLB:ind1\tPL:ILLUMINA\tPU:ind1" \
