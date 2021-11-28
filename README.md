@@ -12,19 +12,19 @@ We received forward and reverse files for each individual that had been cleaned 
 Basic quality control reports were run for each file using ```FastQC```
 
 ```
-FastQC code here
+fastqc ind1_1.fq.gz
 ```
 
 A report for all individuals was compiled using ```MultiQC v1.8``` [(Ewels et al. 2016)](https://academic.oup.com/bioinformatics/article/32/19/3047/2196507) to screen for any quality-control anomalies.
 
 ```
-multiqc data/directory/
+multiqc directory/with/fastqc/outputs
 ```
 
 
 ## Alignment
 
-The *Senecio lautus* reference genome was indexed using ```BWA v0.7.13```.
+The *Senecio lautus* reference genome was indexed using ```BWA v0.7.13``` on default parameters [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/).
 
 ```
 bwa index reference.fasta
@@ -90,4 +90,13 @@ Regions around indels were realigned using GenomeAnalysisToolKit v3.8 (Broad Ins
 
 ## Calculating allele frequency
 Using the low-coverage variant caller ANGSD v0.930 (Korneliussen et al. 2014) variable sites were called in regions from the auxin and shoot gravitropism gene set across all study populations, then allele frequency at these sites calculated jointly within each study population.
+
+
+
+# File processing
+
+Allele frequency files for all populations, both natural and recombinant, were combined in R (script available in files). Only variable sites that were successfully called in all populations were kept. 
+
+Auxin and gravitropism gene names and functions from the original gene set were applied to each site in the combined file using a perl script (available in files).
+
 
