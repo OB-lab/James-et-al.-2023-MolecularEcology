@@ -4,7 +4,7 @@ Samples were plated randomly with despect to Dune/Headland morphology (for  natu
 samples). X lanes were used.
 
 ##### A note on differences between populations in this pipeline
-The bioformatic processing of the datasets (natural populations and advancted recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/proccessing steps where the piplines diverge or use different program reflect personal tool preferences rather than a difference in data structure or needs.
+The bioformatic processing of the datasets (natural populations and advancted recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/processing steps where the piplines diverge or use different program reflect personal tool preferences rather than a difference in data structure or needs.
 
 ## Quality filtering
 We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
@@ -45,7 +45,7 @@ samtools sort -T ind1 -o ind1_sorted.bam
 
 ## Cleaning BAMs
 
-For the advanced recombina
+For the advanced recombinant population, sorted BAM files were cleaned using ```Picard v2.22``` CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0
 
 java -Xmx2g -jar /home/uqralls1/programs/picard.jar CleanSam \
 	INPUT=${SAMPLE}_sorted.bam \
