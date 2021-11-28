@@ -1,10 +1,10 @@
 # Bioinformatics
 Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage.
-Samples were plated randomly with despect to Dune/Headland morphology (for  natural population samples) or gravitropic/agravitropic status (for advanced recombinant
+Samples were plated randomly with respect to Dune/Headland morphology (for  natural population samples) or gravitropic/agravitropic status (for advanced recombinant
 samples). X lanes were used.
 
 ##### A note on differences in this pipeline between populations
-The bioformatic processing of the datasets (natural populations and advancted recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/processing steps where the piplines diverge or use different programs reflects only personal tool preferences.
+The bioinformatic processing of the datasets (natural populations and advanced recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/processing steps where the pipelines diverge or use different programs reflects only personal tool preferences.
 
 ## Quality filtering
 We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
@@ -43,7 +43,7 @@ samtools sort -T ind1 -o ind1_sorted.bam
 ```
 
 ### Alignment statistics
-Alignment statistics were calcualted for each individual using ```Samtools v1.3```flagstat function on default parameters.
+Alignment statistics were calculated for each individual using ```Samtools v1.3```flagstat function on default parameters.
 
 ```
 samtools flagstat ind1_sorted.bam &> ind1_stats.txt
