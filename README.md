@@ -30,7 +30,7 @@ The *Senecio lautus* reference genome was indexed using ```BWA v0.7.13``` on def
 bwa index reference.fasta
 ```
 
-For each individual, reads were aligned to the reference genome and read groups added using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3```[(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/).
+For each individual, reads were aligned to the reference genome and read groups added using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3```[(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/) sort function.
 
 
 ```
@@ -68,7 +68,7 @@ For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014
 samblaster -M ind1_sorted.bam > ind1_mdup.cln.sorted.bam
 ```
 
-For natural population samples, ```Picard v2.22``` was used on default parameters (using the option to work from a sorted file) to mark PCR duplicates for removal.
+For natural population samples, ```Picard v2.22``` MarkDuplicates was used on default parameters (using the option to work from a sorted file) to mark PCR duplicates for removal.
 
 ```
 java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDuplicates \
@@ -83,23 +83,23 @@ java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDupl
 ```
 
 ### Indexing BAMs
-Cleaned and sorted BAM files with PCR duplicates marked were then indexed using ```Samtools v1.3```.
+Cleaned and sorted BAM files with PCR duplicates marked were then indexed using ```Samtools v1.3``` index function.
 
 ```
 samtools index ind1_mdup.cln.sorted.bam 
 ```
 
 ## Realigning around indels
-Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020)](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/).
+Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020)](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/) CreateSequenceDictionary.
 
-First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.2``` for use with ```GATK v3.8```.
+First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.22``` CreateSequenceDictionary.
 
 ```
 java -jar picard.jar CreateSequenceDictionary \
   -REFERENCE reference.fasta
 ```
 
-Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` for use with ```GATK v3.8```.
+Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` faidx.
 
 ```
 samtools faidx /90days/uqralls1/Reference/Senecio.contigs.fasta
@@ -135,7 +135,7 @@ The final BAM files were indexed  using ```Samtools v1.3``` index function.
 samtools index ind1_rln.mdup.cln.sorted.bam 
 ```
 
-And validated using ```Picard v2.22``` ValidateSamFile function.
+And validated using ```Picard v2.22``` ValidateSamFile.
 
 ```
 java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
@@ -147,7 +147,28 @@ java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
 ```
 
 ## Calculating allele frequency
-Using the low-coverage variant caller ANGSD v0.930 (Korneliussen et al. 2014) variable sites were called in regions from the auxin and shoot gravitropism gene set across all study populations, then allele frequency at these sites calculated jointly within each study population.
+
+Using the low-coverage variant caller ANGSD v0.930 [(Korneliussen et al. 2014)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4), variable sites were called in regions from the auxin and shoot gravitropism gene set (regions available in files). This was done for all populations (separately for natural and recombinants). 
+
+angsd -bam bam-file-paths.txt \
+        -GL 1 \
+        -rf gene-regions.txt \
+        -out snp-sites \
+        -doMaf 2 \
+        -SNP_pval 1e-6 \
+        -doMajorMinor 1 \
+        -minMaf 0.05 \
+        -nThreads 10
+
+Parameter notes:
+GL 1: calculates genotype likelihood with the Samtools method
+doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to pick)
+SNP_pval 1e-6: keeps only sites with a p-value less than 1e-6
+doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles
+minMaf 0.05: filters for sites with minimum minor allele freq >0.05
+
+
+then allele frequency at these sites calculated jointly within each study population.
 
 
 
