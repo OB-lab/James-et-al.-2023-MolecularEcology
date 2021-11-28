@@ -9,7 +9,7 @@ The bioformatic processing of the datasets (natural populations and advancted re
 ## Quality filtering
 We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
 
-We ran basic quality control reports for each file using ```FastQC```
+Basic quality control reports were run for each file using ```FastQC```
 
 ```
 FastQC code here
@@ -30,7 +30,7 @@ The *Senecio lautus* reference genome was indexed using ```BWA v0.7.13```.
 bwa index reference.fasta
 ```
 
-For each individual, we aligned reads to the reference genome and added read groups using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3```[(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/).
+For each individual, reads were aligned to the reference genome and read groups added using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3```[(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/).
 
 
 ```
@@ -45,11 +45,22 @@ samtools sort -T ind1 -o ind1_sorted.bam
 
 ## Cleaning BAMs
 
-For the advanced recombinant population, sorted BAM files were cleaned using ```Picard v2.22``` CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0
+### Basic cleaning
+For the advanced recombinant population, sorted BAM files were cleaned using ```Picard v2.22``` CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0.
 
+```
 java -Xmx2g -jar /home/uqralls1/programs/picard.jar CleanSam \
-	INPUT=${SAMPLE}_sorted.bam \
-	OUTPUT=${SAMPLE}_cln.sorted.bam
+	INPUT=ind1_sorted.bam \
+	OUTPUT=ind1_cln.sorted.bam
+	
+```
+
+### Indexing BAMs
+For the advanced recombinant population, cleaned and sorted BAM files were indexed using ```Samtools v1.3```[(Li et al. 2009)]
+
+```
+samtools index ind1_mdup.cln.sorted.bam 
+```
 
 ### Marking PCR duplicates
 
