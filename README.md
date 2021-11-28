@@ -71,18 +71,22 @@ samblaster -M
 ```
 
 For natural population samples, ```Picard``` was used on default parameter (using the option to work from a sorted file) to mark PCR duplicates for removal.
+
+```
 java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDuplicates \
-	INPUT=${SAMPLE}_cln.sorted.bam \
-	OUTPUT=${SAMPLE}_mdup.cln.sorted.bam \
+	INPUT=ind1_cln.sorted.bam \
+	OUTPUT=ind1_mdup.cln.sorted.bam \
 	REMOVE_DUPLICATES=false \
 	ASSUME_SORTED=true \
 	VALIDATION_STRINGENCY=SILENT \
 	READ_NAME_REGEX=null \
 	MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=900 \
-	METRICS_FILE=${SAMPLE}_mdup.cln.sorted.metrics
-        
+	METRICS_FILE=ind1_mdup.cln.sorted.metrics
+```
 
-Regions around indels were realigned using GenomeAnalysisToolKit v3.8 (Broad Institute 2018). Using the low-coverage variant caller ANGSD v0.930 (Korneliussen et al. 2014) variable sites were called in regions from the auxin gene set across all study populations, then allele frequency at these sites calculated jointly within each study population.
+## Realigning around indels
+Regions around indels were realigned using GenomeAnalysisToolKit v3.8 (Broad Institute 2018). 
 
 ## Calculating allele frequency
+Using the low-coverage variant caller ANGSD v0.930 (Korneliussen et al. 2014) variable sites were called in regions from the auxin and shoot gravitropism gene set across all study populations, then allele frequency at these sites calculated jointly within each study population.
 
