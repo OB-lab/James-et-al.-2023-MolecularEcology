@@ -3,13 +3,13 @@ Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBse
 Samples were plated randomly with despect to Dune/Headland morphology (for  natural population samples) or gravitropic/agravitropic status (for advanced recombinant
 samples). X lanes were used.
 
-##### A note on differences between populations in this pipeline
+##### A note on differences in this pipeline between populations
 The bioformatic processing of the datasets (natural populations and advancted recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/processing steps where the piplines diverge or use different program reflect only personal tool preferences.
 
 ## Quality filtering
 We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
 
-Basic quality control reports were run for each file using ```FastQC```
+Basic quality control reports were run for each file using ```FastQC``` [(Andrews, 2010)] (https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
 
 ```
 fastqc ind1_1.fq.gz
@@ -55,7 +55,6 @@ java -Xmx2g -jar /home/uqralls1/programs/picard.jar CleanSam \
 	
 ```
 
-
 ### Marking PCR duplicates
 
 For natural population samples, ```samblaster v.0.1.24``` was used on default parameter (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
@@ -86,7 +85,16 @@ samtools index ind1_mdup.cln.sorted.bam
 ```
 
 ## Realigning around indels
-Regions around indels were realigned using GenomeAnalysisToolKit v3.8 (Broad Institute 2018). 
+Regions around indels were realigned using ```GenomeAnalysisToolKit v3.8``` [(Van der Auwera and O'Connor, 2020] (https://www.oreilly.com/library/view/genomics-in-the/9781491975183/).
+
+First, a 'dictionary file' of the reference genome was created.
+
+```
+java -jar picard.jar CreateSequenceDictionary \
+  -REFERENCE reference.fasta
+```
+
+
 
 ## Calculating allele frequency
 Using the low-coverage variant caller ANGSD v0.930 (Korneliussen et al. 2014) variable sites were called in regions from the auxin and shoot gravitropism gene set across all study populations, then allele frequency at these sites calculated jointly within each study population.
