@@ -162,13 +162,14 @@ angsd -bam bam-file-paths.txt \
         -nThreads 10
 ```
 
+*Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):
+* *GL 1: calculates genotype likelihood with the Samtools method
+* *doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to determine)
+* *SNP_pval 1e-6: keeps only sites with a p-value less than 1e-6
+* *doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles
+* *minMaf 0.05: filters for sites with minimum minor allele freq >0.05
 
-Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):
-* GL 1: calculates genotype likelihood with the Samtools method
-* doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to determine)
-* SNP_pval 1e-6: keeps only sites with a p-value less than 1e-6
-* doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles
-* minMaf 0.05: filters for sites with minimum minor allele freq >0.05
+
 
 A text file (.txt) version of the variable sites file generated in the previous step (.mafs.gz) was created by extracting contig, snp position, major and minor allele (in columns 1 - 4, respectively)
 
