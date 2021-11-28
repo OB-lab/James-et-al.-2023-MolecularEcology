@@ -201,11 +201,10 @@ ${ANGSD}/angsd -bam ${BAMS} \
         -nThreads 10
 ```	
 	
-	
-Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):
+*Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):
 * GL 1: calculates genotype likelihood with the Samtools method
 * doMaf 1: uses fixed major and minor alleles (specified by -sites argument using the snp-sites-sorted.txt file produced earlier)
-* doMajorMinor 3: uses major and minor alleles (provided in the -sites argument as the .txt file produced earlier)
+* doMajorMinor 3: uses major and minor alleles (provided in the -sites argument as the .txt file produced earlier)*
 
 
 # File processing
