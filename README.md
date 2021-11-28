@@ -89,7 +89,7 @@ Cleaned and sorted BAM files with PCR duplicates marked were then indexed using 
 samtools index ind1_mdup.cln.sorted.bam 
 ```
 
-## Realigning around indels
+### Realigning around indels
 Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020)](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/) CreateSequenceDictionary.
 
 First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.22``` CreateSequenceDictionary.
@@ -127,7 +127,7 @@ java -jar /home/uqralls1/programs/GATK/GenomeAnalysisTK.jar \
         -o ind1_rln.mdup.cln.bam
 ```
 
-## Final index and validation of BAM files
+### Final index and validation of BAM files
 
 The final BAM files were indexed  using ```Samtools v1.3``` index function.
 
@@ -147,6 +147,7 @@ java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
 
 ## Calculating allele frequency
 
+### Calling variable sites in target gene-regions
 Using the low-coverage variant caller ```ANGSD v0.930``` [(Korneliussen et al. 2014)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4), variable sites were called in regions from the auxin and shoot gravitropism gene set (regions available in files). This was done for all populations (separately for natural and recombinants). 
 
 ```
@@ -185,6 +186,7 @@ The sorted variable sites file was indexed using ```ANGSD v0.930``` sites index.
 angsd sites index snps-sites-sorted.txt
 ```
 
+### Joint allele frequency calling
 Allele frequency at these sites calculated jointly within each population, again using ```ANGSD v0.930```.
 
 
