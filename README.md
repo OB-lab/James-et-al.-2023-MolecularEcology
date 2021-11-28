@@ -4,12 +4,12 @@ Samples were plated randomly with despect to Dune/Headland morphology (for  natu
 samples). X lanes were used.
 
 ##### A note on differences in this pipeline between populations
-The bioformatic processing of the datasets (natural populations and advancted recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/processing steps where the piplines diverge or use different program reflect only personal tool preferences.
+The bioformatic processing of the datasets (natural populations and advancted recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/processing steps where the piplines diverge or use different programs reflects only personal tool preferences.
 
 ## Quality filtering
 We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
 
-Basic quality control reports were run for each file using ```FastQC``` [(Andrews, 2010)] (https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
+Basic quality control reports were run for each file using ```FastQC``` [(Andrews, 2010)](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
 
 ```
 fastqc ind1_1.fq.gz
@@ -42,6 +42,30 @@ bwa mem \
 samtools sort -T ind1 -o ind1_sorted.bam 
 ```
 
+### Alignment statistics
+Alignment statistics were calcualted for each individual using ```Samtools v1.3```[(Li et al. 2009)] flagstat function on default parameters.
+
+```
+samtools flagstat ind1_sorted.bam &> ind1_stats.txt
+```
+
+These statistics were collated
+
+```
+#print TOTAL READS (located in the first line of the output file) and individual name from each stats report into a summary file 
+awk 'FNR==1 {print FILENAME, $1}' *.txt  > readstotal
+
+#print READS MAPPED (number and percentage) (located in the fifth line of the output file) and individual name from each stats report into a summary file
+awk 'FNR==5 {print FILENAME, $1,$5}' *.txt  > readsmapped
+#remove extra punctionation marks
+sed 's/(//' readsmapped >readsmapped.tmp && mv readsmapped.tmp readsmapped
+
+#print READS PAIRED (number and percentage) and individual name from each stats report into a summary file
+awk 'FNR==9 {print FILENAME, $1,$6}' *.txt  > readspaired
+
+#remove extra punctuation marks
+sed 's/(//' readspaired >readspaired.tmp && mv readspaired.tmp readspaired
+```
 
 ## Cleaning BAMs
 
@@ -49,10 +73,9 @@ samtools sort -T ind1 -o ind1_sorted.bam
 For the advanced recombinant population, sorted BAM files were cleaned using ```Picard v2.22``` CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0.
 
 ```
-java -Xmx2g -jar /home/uqralls1/programs/picard.jar CleanSam \
+java -Xmx2g -jar picard.jar CleanSam \
 	INPUT=ind1_sorted.bam \
 	OUTPUT=ind1_cln.sorted.bam
-	
 ```
 
 ### Marking PCR duplicates
@@ -60,7 +83,7 @@ java -Xmx2g -jar /home/uqralls1/programs/picard.jar CleanSam \
 For natural population samples, ```samblaster v.0.1.24``` was used on default parameter (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
 
 ```
-samblaster -M
+samblaster -M ind1_sorted.bam
 ```
 
 For natural population samples, ```Picard``` was used on default parameter (using the option to work from a sorted file) to mark PCR duplicates for removal.
