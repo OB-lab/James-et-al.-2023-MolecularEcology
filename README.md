@@ -3,7 +3,7 @@ Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBse
 Samples were plated randomly with respect to Dune/Headland morphology (for  natural population samples) or gravitropic/agravitropic status (for advanced recombinant
 samples). X lanes were used.
 
-##### A note on differences in this pipeline between populations
+##### A note on differences in this pipeline between natural and recombinant populations
 The bioinformatic processing of the datasets (natural populations and advanced recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/processing steps where the pipelines diverge or use different programs reflects only personal tool preferences.
 
 ## Quality filtering
