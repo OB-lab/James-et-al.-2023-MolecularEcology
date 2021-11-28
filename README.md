@@ -148,8 +148,9 @@ java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
 
 ## Calculating allele frequency
 
-Using the low-coverage variant caller ANGSD v0.930 [(Korneliussen et al. 2014)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4), variable sites were called in regions from the auxin and shoot gravitropism gene set (regions available in files). This was done for all populations (separately for natural and recombinants). 
+Using the low-coverage variant caller ```ANGSD v0.930``` [(Korneliussen et al. 2014)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4), variable sites were called in regions from the auxin and shoot gravitropism gene set (regions available in files). This was done for all populations (separately for natural and recombinants). 
 
+```
 angsd -bam bam-file-paths.txt \
         -GL 1 \
         -rf gene-regions.txt \
@@ -159,16 +160,17 @@ angsd -bam bam-file-paths.txt \
         -doMajorMinor 1 \
         -minMaf 0.05 \
         -nThreads 10
+```
 
 Parameter notes:
-GL 1: calculates genotype likelihood with the Samtools method
-doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to pick)
-SNP_pval 1e-6: keeps only sites with a p-value less than 1e-6
-doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles
-minMaf 0.05: filters for sites with minimum minor allele freq >0.05
+* GL 1: calculates genotype likelihood with the Samtools method
+* doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to pick)
+* SNP_pval 1e-6: keeps only sites with a p-value less than 1e-6
+* doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles
+* minMaf 0.05: filters for sites with minimum minor allele freq >0.05
 
 
-then allele frequency at these sites calculated jointly within each study population.
+Allele frequency at these sites calculated jointly within each population, again using ```ANGSD v0.930```.
 
 
 
