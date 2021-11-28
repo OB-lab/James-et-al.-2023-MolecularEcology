@@ -52,7 +52,7 @@ samtools flagstat ind1_sorted.bam &> ind1_stats.txt
 ## Cleaning BAMs
 
 ### Basic cleaning
-For the advanced recombinant population, sorted BAM files were cleaned using ```Picard v2.22``` CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0.
+For the advanced recombinant population, sorted BAM files were cleaned using ```Picard v2.22``` [(Broad Institute, 2018)](http://broadinstitute.github.io/picard/) CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0.
 
 ```
 java -Xmx2g -jar picard.jar CleanSam \
@@ -62,10 +62,10 @@ java -Xmx2g -jar picard.jar CleanSam \
 
 ### Marking PCR duplicates
 
-For natural population samples, ```samblaster v.0.1.24``` was used on default parameter (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
+For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014)](https://academic.oup.com/bioinformatics/article/30/17/2503/2748175) was used on default parameter (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
 
 ```
-samblaster -M ind1_sorted.bam
+samblaster -M ind1_sorted.bam > ind1_mdup.cln.sorted.bam
 ```
 
 For natural population samples, ```Picard v2.22``` was used on default parameter (using the option to work from a sorted file) to mark PCR duplicates for removal.
@@ -100,7 +100,10 @@ java -jar picard.jar CreateSequenceDictionary \
 ```
 
 Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` for use with ```GATK v3.8```.
+
+```
 samtools faidx /90days/uqralls1/Reference/Senecio.contigs.fasta
+```
 
 Targets for realignment were identified using ```GATK v3.8``` RealignerTargetCreator.
 
