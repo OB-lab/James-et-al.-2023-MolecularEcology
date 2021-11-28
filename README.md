@@ -3,6 +3,9 @@ Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBse
 Samples were plated randomly with despect to Dune/Headland morphology (for  natural population samples) or gravitropic/agravitropic status (for advanced recombinant
 samples). X lanes were used.
 
+## A note on differences between populations in this pipeline
+The bioformatic processing of the datasets (natural populations and advancted recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor cleaning/proccessing steps where the piplines diverge or use different program reflect personal tool preferences.
+
 ## Quality filtering
 We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
 
@@ -36,15 +39,39 @@ bwa mem \
         reference.fasta \
         ind1_1.fq.gz \
         ind2_2.fq.gz |
-samtools sort -@ 12 -T ind1 -o ind1_sorted.bam 
+samtools sort -T ind1 -o ind1_sorted.bam 
 ```
 
 
 ## Cleaning BAMs
 
+For the advanced recombina
+
+java -Xmx2g -jar /home/uqralls1/programs/picard.jar CleanSam \
+	INPUT=${SAMPLE}_sorted.bam \
+	OUTPUT=${SAMPLE}_cln.sorted.bam
+
 ### Marking PCR duplicates
 
-For natural population samples, ```samblaster v.0.1.24``` was used to mark PCR duplicates for removal.
+For natural population samples, ```samblaster v.0.1.24``` was used on default parameter (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
+
+```
+samblaster -M
+```
+
+For natural population samples, ```Picard``` was used on default parameter (using the option to work from a sorted file) to mark PCR duplicates for removal.
+java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDuplicates \
+	INPUT=${SAMPLE}_cln.sorted.bam \
+	OUTPUT=${SAMPLE}_mdup.cln.sorted.bam \
+	REMOVE_DUPLICATES=false \
+	ASSUME_SORTED=true \
+	VALIDATION_STRINGENCY=SILENT \
+	READ_NAME_REGEX=null \
+	MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=900 \
+	METRICS_FILE=${SAMPLE}_mdup.cln.sorted.metrics
+        
+
+Regions around indels were realigned using GenomeAnalysisToolKit v3.8 (Broad Institute 2018). Using the low-coverage variant caller ANGSD v0.930 (Korneliussen et al. 2014) variable sites were called in regions from the auxin gene set across all study populations, then allele frequency at these sites calculated jointly within each study population.
 
 ## Calculating allele frequency
 
