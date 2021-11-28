@@ -43,7 +43,7 @@ samtools sort -T ind1 -o ind1_sorted.bam
 ```
 
 ### Alignment statistics
-Alignment statistics were calcualted for each individual using ```Samtools v1.3```[(Li et al. 2009)] flagstat function on default parameters.
+Alignment statistics were calcualted for each individual using ```Samtools v1.3```flagstat function on default parameters.
 
 ```
 samtools flagstat ind1_sorted.bam &> ind1_stats.txt
@@ -114,16 +114,37 @@ samtools index ind1_mdup.cln.sorted.bam
 ## Realigning around indels
 Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/).
 
-First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.2``` for use with GATK.
+First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.2``` for use with ```GATK v3.8```.
 
 ```
 java -jar picard.jar CreateSequenceDictionary \
   -REFERENCE reference.fasta
 ```
 
-Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` for use with GATK.
+Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` for use with ```GATK v3.8```.
 samtools faidx /90days/uqralls1/Reference/Senecio.contigs.fasta
 
+Targets for realignment were identified using ```GATK v3.8``` RealignerTargetCreator.
+
+```
+java -jar GenomeAnalysisTK.jar \
+        -T RealignerTargetCreator \
+        -R reference.fasta \
+        -I ind1_mdup.cln.sorted.bam \
+        -nt 2 \
+        -o ind1.intervals
+```
+
+The realignment was performed using ```GATK v3.8``` IndelRealigner.
+
+```
+java -jar /home/uqralls1/programs/GATK/GenomeAnalysisTK.jar \
+        -T IndelRealigner \
+        -R reference.fasta \
+        -I ind1_mdup.cln.sorted.bam \
+        -targetIntervals ind1.intervals \
+        -o ind1_rln.mdup.cln.bam
+```
 
 ## Calculating allele frequency
 Using the low-coverage variant caller ANGSD v0.930 (Korneliussen et al. 2014) variable sites were called in regions from the auxin and shoot gravitropism gene set across all study populations, then allele frequency at these sites calculated jointly within each study population.
