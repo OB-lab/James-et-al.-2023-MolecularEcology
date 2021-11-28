@@ -90,7 +90,7 @@ samtools index ind1_mdup.cln.sorted.bam
 ```
 
 ## Realigning around indels
-Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/).
+Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020)](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/).
 
 First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.2``` for use with ```GATK v3.8```.
 
@@ -125,6 +125,25 @@ java -jar /home/uqralls1/programs/GATK/GenomeAnalysisTK.jar \
         -I ind1_mdup.cln.sorted.bam \
         -targetIntervals ind1.intervals \
         -o ind1_rln.mdup.cln.bam
+```
+
+## Final index and validation of BAM files
+
+The final BAM files were indexed  using ```Samtools v1.3``` index function.
+
+```
+samtools index ind1_rln.mdup.cln.sorted.bam 
+```
+
+And validated using ```Picard v2.22``` ValidateSamFile function.
+
+```
+java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
+        INPUT= ind1_rln.mdup.cln.sorted.bam \
+        OUTPUT=ind1.out \
+        MODE=VERBOSE \
+        MAX_OPEN_TEMP_FILES=1000
+	
 ```
 
 ## Calculating allele frequency
