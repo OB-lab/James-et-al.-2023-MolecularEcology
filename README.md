@@ -105,22 +105,24 @@ java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDupl
 ```
 
 ### Indexing BAMs
-Cleaned and sorted BAM files with PCR duplicates marked were then indexed using ```Samtools v1.3```[(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/).
+Cleaned and sorted BAM files with PCR duplicates marked were then indexed using ```Samtools v1.3```.
 
 ```
 samtools index ind1_mdup.cln.sorted.bam 
 ```
 
 ## Realigning around indels
-Regions around indels were realigned using ```GenomeAnalysisToolKit v3.8``` [(Van der Auwera and O'Connor, 2020] (https://www.oreilly.com/library/view/genomics-in-the/9781491975183/).
+Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/).
 
-First, a 'dictionary file' of the reference genome was created.
+First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.2``` for use with GATK.
 
 ```
 java -jar picard.jar CreateSequenceDictionary \
   -REFERENCE reference.fasta
 ```
 
+Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` for use with GATK.
+samtools faidx /90days/uqralls1/Reference/Senecio.contigs.fasta
 
 
 ## Calculating allele frequency
