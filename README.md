@@ -62,13 +62,13 @@ java -Xmx2g -jar picard.jar CleanSam \
 
 ### Marking PCR duplicates
 
-For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014)](https://academic.oup.com/bioinformatics/article/30/17/2503/2748175) was used on default parameter (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
+For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014)](https://academic.oup.com/bioinformatics/article/30/17/2503/2748175) was used on default parameters (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
 
 ```
 samblaster -M ind1_sorted.bam > ind1_mdup.cln.sorted.bam
 ```
 
-For natural population samples, ```Picard v2.22``` was used on default parameter (using the option to work from a sorted file) to mark PCR duplicates for removal.
+For natural population samples, ```Picard v2.22``` was used on default parameters (using the option to work from a sorted file) to mark PCR duplicates for removal.
 
 ```
 java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDuplicates \
