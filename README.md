@@ -15,10 +15,10 @@ Basic quality control reports were run for each file using ```FastQC```
 FastQC code here
 ```
 
-A report for all individuals was compiled using ```MultiQC``` (which metrics were checked?)
+A report for all individuals was compiled using ```MultiQC v1.8``` [(Ewels et al. 2016)](https://academic.oup.com/bioinformatics/article/32/19/3047/2196507) to screen for any quality-control anomalies.
 
 ```
-MultiQC code here
+multiqc data/directory/
 ```
 
 
@@ -55,12 +55,6 @@ java -Xmx2g -jar /home/uqralls1/programs/picard.jar CleanSam \
 	
 ```
 
-### Indexing BAMs
-For the advanced recombinant population, cleaned and sorted BAM files were indexed using ```Samtools v1.3```[(Li et al. 2009)]
-
-```
-samtools index ind1_mdup.cln.sorted.bam 
-```
 
 ### Marking PCR duplicates
 
@@ -82,6 +76,13 @@ java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDupl
 	READ_NAME_REGEX=null \
 	MAX_FILE_HANDLES_FOR_READ_ENDS_MAP=900 \
 	METRICS_FILE=ind1_mdup.cln.sorted.metrics
+```
+
+### Indexing BAMs
+Cleaned and sorted BAM files with PCR duplicates marked were then indexed using ```Samtools v1.3```[(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/).
+
+```
+samtools index ind1_mdup.cln.sorted.bam 
 ```
 
 ## Realigning around indels
