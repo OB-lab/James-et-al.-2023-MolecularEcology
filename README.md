@@ -162,6 +162,7 @@ angsd -bam bam-file-paths.txt \
         -nThreads 10
 ```
 
+
 Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):
 * GL 1: calculates genotype likelihood with the Samtools method
 * doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to determine)
@@ -199,6 +200,7 @@ ${ANGSD}/angsd -bam ${BAMS} \
         -out ${OUTFILE} \
         -nThreads 10
 ```	
+	
 	
 Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):
 * GL 1: calculates genotype likelihood with the Samtools method
