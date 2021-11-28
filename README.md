@@ -49,28 +49,6 @@ Alignment statistics were calcualted for each individual using ```Samtools v1.3`
 samtools flagstat ind1_sorted.bam &> ind1_stats.txt
 ```
 
-Key statistics for  number of reads, number and percentage of reads mapped, and number and percentage of reads paired to were collated into a summary files as follows. I'm a beginner don't laugh at me :(
-
-```
-#print TOTAL READS (located in the first line of the output file) and individual name
-awk 'FNR==1 {print FILENAME, $1}' *.txt  > readstotal
-#remove extra punctionation marks
-sed 's/(//' totalreads > totalreads.tmp && mv totalreads.tmp totalreads
-
-
-#print READS MAPPED number and percentage (located in the fifth line of the output file) and individual name
-awk 'FNR==5 {print FILENAME, $1,$5}' *.txt  > readsmapped
-#remove extra punctionation marks
-sed 's/(//' readsmapped > readsmapped.tmp && mv readsmapped.tmp readsmapped
-
-
-#print READS PAIRED number and percentage (located in the ninth line of the output file) and individual name
-awk 'FNR==9 {print FILENAME, $1,$6}' *.txt  > readspaired
-#remove extra punctuation marks
-sed 's/(//' readspaired > readspaired.tmp && mv readspaired.tmp readspaired
-
-```
-
 ## Cleaning BAMs
 
 ### Basic cleaning
@@ -90,7 +68,7 @@ For natural population samples, ```samblaster v.0.1.24``` was used on default pa
 samblaster -M ind1_sorted.bam
 ```
 
-For natural population samples, ```Picard``` was used on default parameter (using the option to work from a sorted file) to mark PCR duplicates for removal.
+For natural population samples, ```Picard v2.22``` was used on default parameter (using the option to work from a sorted file) to mark PCR duplicates for removal.
 
 ```
 java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDuplicates \
