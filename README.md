@@ -161,7 +161,7 @@ angsd -bam bam-file-paths.txt \
         -nThreads 10
 ```
 
-Parameter notes:
+Parameter notes (more information available in [(ANGSD documentation)](http://www.popgen.dk/angsd/index.php/ANGSD):
 * GL 1: calculates genotype likelihood with the Samtools method
 * doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to determine)
 * SNP_pval 1e-6: keeps only sites with a p-value less than 1e-6
