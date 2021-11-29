@@ -15,7 +15,7 @@ Basic quality control reports were run for each file using ```FastQC``` [(Andrew
 fastqc ind1_1.fq.gz
 ```
 
-A report for all individuals was compiled from the ```FastQC``` output using ```MultiQC v1.8``` [(Ewels et al. 2016)](https://academic.oup.com/bioinformatics/article/32/19/3047/2196507) to screen for any quality-control anomalies.
+A report for all individuals was compiled from the ```FastQC``` outputs using ```MultiQC v1.8``` [(Ewels et al. 2016)](https://academic.oup.com/bioinformatics/article/32/19/3047/2196507) to screen for any quality-control anomalies.
 
 ```
 multiqc directory/with/fastqc/outputs
