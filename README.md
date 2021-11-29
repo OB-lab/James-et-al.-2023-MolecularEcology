@@ -1,6 +1,6 @@
 # Bioinformatics
 Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage.
-Samples were plated randomly with respect to Dune/Headland morphology (for  natural population samples) or gravitropic/agravitropic status (for advanced recombinant
+Samples were plated randomly with respect to Dune/Headland ecotype (for natural population samples) or gravitropic/agravitropic status (for advanced recombinant
 samples). X lanes were used.
 
 ##### A note on differences in processing of natural and recombinant population data
@@ -24,13 +24,13 @@ multiqc directory/with/fastqc/outputs
 
 ## Alignment
 
-The *Senecio lautus* reference genome was indexed using ```BWA v0.7.13``` on default parameters [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/).
+The *Senecio lautus* reference genome was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/).
 
 ```
 bwa index reference.fasta
 ```
 
-For each individual, reads were aligned to the reference genome and read groups added using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3```[(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/) sort function.
+For each individual, reads were aligned to the reference genome and read groups added using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3``` [(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/) sort function.
 
 
 ```
@@ -43,7 +43,7 @@ samtools sort -T ind1 -o ind1_sorted.bam
 ```
 
 ### Alignment statistics
-Alignment statistics were calculated for each individual using ```Samtools v1.3```flagstat function on default parameters.
+Alignment statistics were calculated for each individual using ```Samtools v1.3``` flagstat function.
 
 ```
 samtools flagstat ind1_sorted.bam &> ind1_stats.txt
@@ -52,7 +52,7 @@ samtools flagstat ind1_sorted.bam &> ind1_stats.txt
 ## Cleaning BAMs
 
 ### Basic cleaning
-For the advanced recombinant population, sorted BAM files were cleaned using ```Picard v2.22``` [(Broad Institute, 2018)](http://broadinstitute.github.io/picard/) CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0.
+For the advanced recombinant population, sorted BAM files for each individual were cleaned using ```Picard v2.22``` [(Broad Institute, 2018)](http://broadinstitute.github.io/picard/) CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0.
 
 ```
 java -Xmx2g -jar picard.jar CleanSam \
@@ -62,7 +62,7 @@ java -Xmx2g -jar picard.jar CleanSam \
 
 ### Marking PCR duplicates
 
-For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014)](https://academic.oup.com/bioinformatics/article/30/17/2503/2748175) was used on default parameters (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
+For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014)](https://academic.oup.com/bioinformatics/article/30/17/2503/2748175) was used with default parameters (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
 
 ```
 samblaster -M ind1_sorted.bam > ind1_mdup.cln.sorted.bam
@@ -135,7 +135,7 @@ The final BAM files were indexed  using ```Samtools v1.3``` index function.
 samtools index ind1_rln.mdup.cln.sorted.bam 
 ```
 
-And validated using ```Picard v2.22``` ValidateSamFile.
+Files were validated using ```Picard v2.22``` ValidateSamFile.
 
 ```
 java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
@@ -145,7 +145,7 @@ java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
         MAX_OPEN_TEMP_FILES=1000	
 ```
 
-## Calculating allele frequency
+## Calculating allele frequencies
 
 ### Calling variable sites in target gene-regions
 Using the low-coverage variant caller ```ANGSD v0.930``` [(Korneliussen et al. 2014)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4), variable sites were called in regions from the auxin and shoot gravitropism gene set (regions available in files). This was done for all populations (separately for natural and recombinants). 
