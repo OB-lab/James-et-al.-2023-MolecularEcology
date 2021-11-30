@@ -7,20 +7,20 @@ samples). X lanes were used.
 The bioinformatic processing of these datasets (natural populations and advanced recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor file cleaning/processing steps where the pipelines diverge or use different programs reflects only personal tool preferences.
 
 ## Quality filtering
-We received forward and reverse files for each individual that had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
+We received two FASTQ files for each individual (one containing forward reads, the other containing reverse reads). These FASTQ files  had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
 
-Basic quality control reports were run for each file using ```FastQC``` [(Andrews, 2010)](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/).
+Basic quality control reports were run for each file using ```FastQC``` [(Andrews, 2010)](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on default parameters.
 
 ```
 fastqc ind1_1.fq.gz
 ```
 
-A report for all individuals was compiled from the ```FastQC``` outputs using ```MultiQC v1.8``` [(Ewels et al. 2016)](https://academic.oup.com/bioinformatics/article/32/19/3047/2196507) to screen for any quality-control anomalies.
+A report for all individuals was compiled from the ```FastQC``` outputs using ```MultiQC v1.8``` [(Ewels et al. 2016)](https://academic.oup.com/bioinformatics/article/32/19/3047/2196507) to screen for any quality-control anomalies (e.g. per-base sequence quality, per-base N content, per-sequence GC content, sequence duplication levels, overrepresented sequences etc.). More information on these measures can be found in these resources from [Michigan State University Research Technology Support Facility](https://rtsf.natsci.msu.edu/genomics/tech-notes/fastqc-tutorial-and-faq/) and [Harvard Chan Bioinformatics Core](https://hbctraining.github.io/Intro-to-rnaseq-hpc-salmon/lessons/qc_fastqc_assessment.html).
 
 ```
 multiqc directory/with/fastqc/outputs
 ```
-
+All files were found to be of sound quality, so no further pre-alignment cleaning was undertaken.
 
 ## Alignment
 
