@@ -1,0 +1,40 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+
+#open allele frequency file
+open (IN1, "allele-freqs.txt") or die;
+#open outout file for printing results
+open OUT, ">>allele-freqs_annotated.txt";
+
+#read through each line of allele frequency file
+foreach my $line (<IN1>) {
+	#remove any line spacing
+	chomp $line;
+	#split the line based on tabs
+	my @cols = split(/\t/, $line);
+	#open the reference file with auxin gene names and functions
+	open (IN2, "auxin-gene-set.txt") or die;
+	#read through each line of the file
+	foreach my $line2 (<IN2>) {
+	#remove any line spacing
+	chomp $line2;
+	#split the line on tabs
+	my @cols2 = split(/\t/, $line2);
+	#if the first column of allele frequency file equals the third column of auxin gene list file,
+	#AND the SNP number of the allele file (i.e. the second column) falls in between the start and finish of the gene list file, print it to the output. 
+    
+	if ($cols[0] eq $cols2[3] && $cols[1] >= $cols2[4] && $cols[1] <= $cols2[5]) {
+		#to the output file print my line, followed by your line
+		print OUT "$cols[0]\t$cols[1]\t$cols[2]\t$cols[3]\t$cols[4]\t$cols[5]\t$cols[6]\t$cols[7]\t$cols2[0]\t$cols2[6]\n";
+		}
+
+	}
+	close IN2;
+}
+		
+close IN1;
+#close the output file
+close OUT;
+
+exit;
