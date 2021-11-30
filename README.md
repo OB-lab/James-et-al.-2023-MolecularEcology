@@ -24,7 +24,7 @@ All files were found to be of sound quality, so no further pre-alignment cleanin
 
 ## Alignment
 
-The *Senecio lautus* reference genome was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/).
+The *Senecio lautus* reference genome [(Wilkinson et al. 2021)](https://www.pnas.org/content/118/47/e2004901118) was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/). A copy of this *S. lautus* reference genome is available for download [here](https://espace.library.uq.edu.au/view/UQ:2c603c6).
 
 ```
 bwa index reference.fasta
@@ -102,7 +102,7 @@ java -jar picard.jar CreateSequenceDictionary \
 Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` faidx.
 
 ```
-samtools faidx /90days/uqralls1/Reference/Senecio.contigs.fasta
+samtools faidx reference.fasta
 ```
 
 Targets for realignment were identified using ```GATK v3.8``` RealignerTargetCreator.
