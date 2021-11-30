@@ -28,7 +28,7 @@ All files were found to be of sound quality, so no further pre-alignment cleanin
 
 ## Alignment
 
-The copy of the *Senecio lautus* reference genome used in this study, produced by [Wilkinson et al. (2021)](https://www.pnas.org/content/118/47/e2004901118)), was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/). A copy of this *S. lautus* reference genome is available for download [here](https://espace.library.uq.edu.au/view/UQ:2c603c6).
+The copy of the *Senecio lautus* reference genome used in this study, produced by [James et al. (2021)](https://academic.oup.com/mbe/article/38/11/4805/6319724#309303427), was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/). 
 
 ```
 bwa index reference.fasta
@@ -122,7 +122,7 @@ java -jar GenomeAnalysisTK.jar \
 ```
 
 
-Finally, the realignment was performed with ```GATK v3.8``` IndelRealigner, using the targets for realignment and dictionary/reference files generated in the previous steps.
+Finally, the realignment was performed with ```GATK v3.8``` IndelRealigner, using the targets for realignment, dictionary, and reference files generated in the previous steps.
 
 ```
 java -jar /home/uqralls1/programs/GATK/GenomeAnalysisTK.jar \
@@ -154,7 +154,9 @@ java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
 ## Calculating allele frequencies
 
 ### Calling variable sites in target gene-regions
-Using the low-coverage variant caller ```ANGSD v0.930``` [(Korneliussen et al. 2014)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4), variable sites were called in regions from the auxin and shoot gravitropism gene set (regions available in files). This was done for all populations (separately for natural and recombinants). 
+Using the low-coverage variant caller ```ANGSD v0.930``` [(Korneliussen et al. 2014)](https://bmcbioinformatics.biomedcentral.com/articles/10.1186/s12859-014-0356-4), variable sites were called in regions from the auxin and shoot gravitropism gene set. 
+
+Variable sites were called across all individuals within the population type (i.e. all six natural populations called together; both recombinant populations called together).
 
 ```
 angsd -bam bam-file-paths.txt \
@@ -177,7 +179,7 @@ angsd -bam bam-file-paths.txt \
 
 
 
-A text file (.txt) version of the variable sites file generated in the previous step (.mafs.gz) was created by extracting contig, snp position, major and minor allele (in columns 1 - 4, respectively)
+A text file (.txt) version of the variable sites files generated in the previous step (.mafs.gz) was created by extracting contig, snp position, major and minor allele (in columns 1 - 4, respectively)
 
 ```
 zcat snp-sites.mafs.gz | awk 'NR!=1{print $1"\t"$2"\t"$3"\t"$4}' > snp-sites.txt
@@ -195,7 +197,7 @@ angsd sites index snp-sites-sorted.txt
 ```
 
 ### Joint allele frequency calling
-Allele frequency at these sites calculated jointly within each population, again using ```ANGSD v0.930```, using the variable sites pro
+Allele frequency at these sites calculated jointly within each population, again using ```ANGSD v0.930```, at the variable sites found in the auxin and gravitropism gene regions, as identified in the previous step.
 
 ```
 ${ANGSD}/angsd -bam ${BAMS} \
@@ -213,6 +215,7 @@ ${ANGSD}/angsd -bam ${BAMS} \
 + *doMaf 1: uses fixed major and minor alleles (specified by -sites argument using the snp-sites-sorted.txt file produced earlier)*
 + *doMajorMinor 3: uses major and minor alleles (provided in the -sites argument as the .txt file produced earlier)*
 
+This gave one allele frequency file [(.mafs.gz)](http://www.popgen.dk/angsd/index.php/Allele_Frequencies#.mafs.gz) per population.
 
 # File processing
 
