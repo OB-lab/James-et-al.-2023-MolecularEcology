@@ -219,8 +219,10 @@ This gave one allele frequency file [(.mafs.gz)](http://www.popgen.dk/angsd/inde
 
 # File processing
 
-Allele frequency files for all populations, both natural and recombinant, were combined in R (script available in files). Only variable sites that were successfully called in all populations were kept. 
+Allele frequency files for all populations, both natural and recombinant, were combined in R (script available in files) to ensure that major and minor alleles were consistent across populations, and only variable sites that were successfully called in all populations were kept. 
 
 Auxin and gravitropism gene names and functions from the original gene set were applied to each site in the combined file using a perl script (available in files).
 
+Maddie/Daniel, could you please add what you did to the files from this point onwards?
+Thank you! -R
 
