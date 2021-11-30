@@ -1,3 +1,7 @@
+# Data availability
+
+Sequencing data files generated at each step of this process are available on The University of Queensland Research Data Manager repository ().
+
 # Bioinformatics
 Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage.
 Samples were plated randomly with respect to Dune/Headland ecotype (for natural population samples) or gravitropic/agravitropic status (for advanced recombinant
@@ -117,7 +121,8 @@ java -jar GenomeAnalysisTK.jar \
         -o ind1.intervals
 ```
 
-The realignment was performed using ```GATK v3.8``` IndelRealigner.
+
+Finally, the realignment was performed with ```GATK v3.8``` IndelRealigner, using the targets for realignment and dictionary/reference files generated in the previous steps.
 
 ```
 java -jar /home/uqralls1/programs/GATK/GenomeAnalysisTK.jar \
@@ -190,16 +195,16 @@ angsd sites index snp-sites-sorted.txt
 ```
 
 ### Joint allele frequency calling
-Allele frequency at these sites calculated jointly within each population, again using ```ANGSD v0.930```.
+Allele frequency at these sites calculated jointly within each population, again using ```ANGSD v0.930```, using the variable sites pro
 
 ```
 ${ANGSD}/angsd -bam ${BAMS} \
         -GL 1 \
         -doMaf 1 \
         -doMajorMinor 3 \
-        -rf ${REGIONS} \
-        -sites ${SITES} \
-        -out ${OUTFILE} \
+        -rf regions.txt \
+        -sites snp-sites.txt \
+        -out outputfile \
         -nThreads 10
 ```	
 	
