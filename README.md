@@ -24,7 +24,7 @@ All files were found to be of sound quality, so no further pre-alignment cleanin
 
 ## Alignment
 
-The *Senecio lautus* reference genome [(Wilkinson et al. 2021)](https://www.pnas.org/content/118/47/e2004901118) was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/). A copy of this *S. lautus* reference genome is available for download [here](https://espace.library.uq.edu.au/view/UQ:2c603c6).
+The copy of the *Senecio lautus* reference genome used in this study (produced by [Wilkinson et al. (2021)](https://www.pnas.org/content/118/47/e2004901118)) was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/). A copy of this *S. lautus* reference genome is available for download [here](https://espace.library.uq.edu.au/view/UQ:2c603c6).
 
 ```
 bwa index reference.fasta
@@ -43,11 +43,12 @@ samtools sort -T ind1 -o ind1_sorted.bam
 ```
 
 ### Alignment statistics
-Alignment statistics were calculated for each individual using ```Samtools v1.3``` flagstat function.
+Alignment statistics were calculated for each individual using ```Samtools v1.3``` flagstat function to check alignment had proceeded successfully (checking total number of reads aligned, total number of reads properly paired etc.). More information on this can be found in the [Samtools flagstat documentation](http://www.htslib.org/doc/samtools-flagstat.html).
 
 ```
 samtools flagstat ind1_sorted.bam &> ind1_stats.txt
 ```
+
 
 ## Cleaning BAMs
 
