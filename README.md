@@ -230,7 +230,7 @@ The following files were used for data analysis:
 
 * The allele frequencies for the natural populations (76,716 SNPs in 560 genes), used for calculating the outlier SNPs and genes: [alleleFreqsNaturalPops.xlsx](alleleFreqsNaturalPops.xlsx)
 
-* The allele frequencies for the recombinant population (79,556 SNPs in 568 genes), used for calculating the outlier SNPs and genes: [alleleFreqsF11s.xlsx](Data%Files/alleleFreqsF11s.xlsx)
+* The allele frequencies for the recombinant population (79,556 SNPs in 568 genes), used for calculating the outlier SNPs and genes: [alleleFreqsF11s.xlsx](Data%20Files/alleleFreqsF11s.xlsx)
 
 * The combined allele frequencies for the natural populations and recombinant populations (merging of the above two files), used for plotting the change in allele frequency graphs: [alleleFreqsCombined.xlsx](Data Files/alleleFreqsCombined.xlsx)
 
