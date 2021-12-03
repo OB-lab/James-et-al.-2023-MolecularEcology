@@ -215,7 +215,7 @@ ${ANGSD}/angsd -bam ${BAMS} \
 + *doMaf 1: uses fixed major and minor alleles (specified by -sites argument using the snp-sites-sorted.txt file produced earlier)*
 + *doMajorMinor 3: uses major and minor alleles (provided in the -sites argument as the .txt file produced earlier)*
 
-This gave one allele frequency file [(.mafs.gz)](http://www.popgen.dk/angsd/index.php/Allele_Frequencies#.mafs.gz) per population.
+This gave one allele frequency file [(.mafs)](http://www.popgen.dk/angsd/index.php/Allele_Frequencies#.mafs.gz) per population.
 
 # File processing
 
