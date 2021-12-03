@@ -219,9 +219,9 @@ This gave one allele frequency file [(.mafs.gz)](http://www.popgen.dk/angsd/inde
 
 # File processing
 
-Allele frequency files within each population type were combined in R (scripts available in files) to ensure that major and minor alleles were consistent across populations, and only variable sites that were successfully called in all populations were kept. This was done separately for the natural populations and the recombinant populations, such that there was one final combined allele frequency file for the natural populations, and one final combined allele frequency file for the recombinant population.
+Allele frequency files within each population type were combined in R ([natural populations script](Allele Frequency/Combine-Pops-Allele-Freq-NatPop), [recombiant population script](Allele Frequency/Combine-Pops-Allele-Freq-RecPop)) to ensure that major and minor alleles were consistent across populations, and only variable sites that were successfully called in all populations were kept. This was done separately for the natural populations and the recombinant populations, such that there was one final combined allele frequency file for the natural populations, and one final combined allele frequency file for the recombinant population.
 
-Auxin and gravitropism gene names and functions from the original gene set were applied to each site in the combined files using a [perl script](Allele%20Frequency/Add-Gene-Name-Function)
+Auxin and gravitropism gene names and functions from the original gene set were applied to each site in the combined files using this [perl script](Allele%20Frequency/Add-Gene-Name-Function).
 
 Final filtering and analysis was done using [JMP](https://www.jmp.com/en_au/home.html) statistical software. 
 
