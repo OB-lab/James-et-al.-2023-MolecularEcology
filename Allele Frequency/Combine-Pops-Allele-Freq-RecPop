@@ -1,5 +1,3 @@
-#Example for recombinant populations
-
 #Reading in allele freqency files
 Gsnps <- read.table("Gravitropic-freq.mafs", header = TRUE)
 AGsnps <- read.table("Agravitropic-freq.mafs", header = TRUE)
