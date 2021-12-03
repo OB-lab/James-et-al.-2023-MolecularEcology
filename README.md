@@ -228,7 +228,7 @@ Final filtering and analysis was done using [JMP](https://www.jmp.com/en_au/home
 For the natural populations, sites were retained if they were sequenced in a minimum of three individuals per population. For the recombinant population, sites were retained if they were sequenced in a minimum of 5 individuals per tail.
 The following files were used for data analysis:
 
-* The allele frequencies for the natural populations (76,716 SNPs in 560 genes), used for calculating the outlier SNPs and genes: [alleleFreqsNaturalPops.xlsx](Data Files/alleleFreqsNaturalPops.xlsx)
+* The allele frequencies for the natural populations (76,716 SNPs in 560 genes), used for calculating the outlier SNPs and genes: [alleleFreqsNaturalPops.xlsx](alleleFreqsNaturalPops.xlsx)
 
 * The allele frequencies for the recombinant population (79,556 SNPs in 568 genes), used for calculating the outlier SNPs and genes: [alleleFreqsF11s.xlsx](Data Files/alleleFreqsF11s.xlsx)
 
