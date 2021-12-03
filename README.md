@@ -219,10 +219,26 @@ This gave one allele frequency file [(.mafs.gz)](http://www.popgen.dk/angsd/inde
 
 # File processing
 
-Allele frequency files for all populations, both natural and recombinant, were combined in R (script available in files) to ensure that major and minor alleles were consistent across populations, and only variable sites that were successfully called in all populations were kept. 
+Allele frequency files for all populations were combined in R (scripts available in files) to ensure that major and minor alleles were consistent across populations, and only variable sites that were successfully called in all populations were kept. This was done separately for the natural populations and the recombinant populations, such that there was one final combined allele frequency file for the natural populations, and one final combined allele frequency file for the recombinant population.
 
-Auxin and gravitropism gene names and functions from the original gene set were applied to each site in the combined file using a perl script (available in files).
+Auxin and gravitropism gene names and functions from the original gene set were applied to each site in the combined files using a perl script (available in files).
 
-Maddie/Daniel, could you please add what you did to the files from this point onwards?
-Thank you! -R
+Final filtering and analysis was done using [JMP](https://www.jmp.com/en_au/home.html) statistical software. 
+
+For the natural populations, sites were retained if they were sequenced in a minimum of three individuals per population. For the recombinant population, sites were retained if they were sequenced in a minimum of 5 individuals per tail.
+The following files were used for data analysis:
+
+* The allele frequencies for the natural populations (76,716 SNPs in 560 genes), used for calculating the outlier SNPs and genes: [alleleFreqsNaturalPops.xlsx](Data Files/ alleleFreqsNaturalPops.xlsx)
+
+* The allele frequencies for the recombinant population (79,556 SNPs in 568 genes), used for calculating the outlier SNPs and genes: [alleleFreqsF11s.xlsx](Data Files/ alleleFreqsF11s.xlsx)
+
+* The combined allele frequencies for the natural populations and recombinant populations (merging of the above two files), used for plotting the change in allele frequency graphs: [alleleFreqsCombined.xlsx](Data Files/alleleFreqsCombined.xlsx)
+
+* Summary table of the outlier genes across localities and the recombinant population: [outlierGenes.xlsx](Data Files/outlierGenes.xlsx)
+
+* Summary table of the functions of the outlier genes: [functions.xlsx](Data Files/functions.xlsx)
+
+
+
+
 
