@@ -1,6 +1,6 @@
 # Data availability
 
-Sequencing data files generated at each step of this process are available on The University of Queensland Research Data Manager repository ().
+Sequencing data files generated at each step of this process will be available on The University of Queensland Research Data Manager repository at the time of publication.
 
 # Bioinformatics
 Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage.
