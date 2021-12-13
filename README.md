@@ -238,6 +238,8 @@ The following files were used for data analysis:
 
 * Summary table of the functions of the outlier genes: [functions.xlsx](Data%20Files/functions.xlsx)
 
+* Summary table of the number of outlier and non-outlier SNPs for the 45 parallel architecture genes: [45genesSNPsummary.xlsx](Data%20Files/45genesSNPsummary.xlsx)
+
 
 
 
