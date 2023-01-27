@@ -363,7 +363,7 @@ abline(2.7, 0, col="red").
 
 Manhattan plots for each locality:
 
-![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityManhattan.pdf?raw=true)
+![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityManhattan.png?raw=true)
 
 ## BayeScan
 
