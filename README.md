@@ -3,17 +3,15 @@
 Sequencing data files generated at each step of this process will be available on The University of Queensland Research Data Manager repository at the time of publication.
 
 # Bioinformatics
-Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage.
-Samples were plated randomly with respect to Dune/Headland ecotype (for natural population samples) or gravitropic/agravitropic status (for advanced recombinant
-samples). X lanes were used.
+Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage. Samples were plated randomly with respect to Dune/Headland ecotype (for natural population samples) or gravitropic/agravitropic status (for MAGIC samples). X lanes were used.
 
 ##### A note on differences in processing of natural and recombinant population data
-The bioinformatic processing of these datasets (natural populations and advanced recombinant populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor file cleaning/processing steps where the pipelines diverge or use different programs reflects only personal tool preferences.
+The bioinformatic processing of these datasets (natural populations and MAGIC populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor file cleaning/processing steps where the pipelines diverge or use different programs reflects only personal tool preferences.
 
 ## Quality filtering
 We received two FASTQ files for each individual (one containing forward reads, the other containing reverse reads). These FASTQ files  had been cleaned by BGI to remove: barcode sequences, DNBseq adaptors, low quality reads (50% of quality scores <10), and reads containing >10% unidentified bases. 
 
-Basic quality control reports were run for each file using ```FastQC``` [(Andrews, 2010)](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on default parameters.
+Basic quality control reports were run for each file using ```FastQC``` [(Andrews, 2010)](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) on default parameters:
 
 ```
 fastqc ind1_1.fq.gz
@@ -24,17 +22,18 @@ A report for all individuals was compiled from the ```FastQC``` outputs using ``
 ```
 multiqc directory/with/fastqc/outputs
 ```
+
 All files were found to be of sound quality, so no further pre-alignment cleaning was undertaken.
 
 ## Alignment
 
-The copy of the *Senecio lautus* reference genome used in this study, produced by [James et al. (2021)](https://academic.oup.com/mbe/article/38/11/4805/6319724#309303427), was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/). 
+The copy of the *Senecio lautus* reference genome used in this study, produced by [James et al. (2021)](https://academic.oup.com/mbe/article/38/11/4805/6319724#309303427), was indexed using ```BWA v0.7.13``` [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/):
 
 ```
 bwa index reference.fasta
 ```
 
-For each individual, reads were aligned to the reference genome and read groups added using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3``` [(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/) sort function.
+For each individual, reads were aligned to the reference genome and read groups added using the ```BWA-MEM v0.7.13``` algorithm [(Li and Durbin, 2009)](https://pubmed.ncbi.nlm.nih.gov/19451168/) under default parameters. The resulting BAM files were sorted using ```Samtools v1.3``` [(Li et al. 2009)](https://pubmed.ncbi.nlm.nih.gov/19505943/) sort function:
 
 
 ```
@@ -47,17 +46,16 @@ samtools sort -T ind1 -o ind1_sorted.bam
 ```
 
 ### Alignment statistics
-Alignment statistics were calculated for each individual using ```Samtools v1.3``` flagstat function to check alignment had proceeded successfully (checking total number of reads aligned, total number of reads properly paired etc.). More information on this can be found in the [Samtools flagstat documentation](http://www.htslib.org/doc/samtools-flagstat.html).
+Alignment statistics were calculated for each individual using ```Samtools v1.3``` flagstat function to check alignment had proceeded successfully (checking total number of reads aligned, total number of reads properly paired etc.). More information on this can be found in the [Samtools flagstat documentation](http://www.htslib.org/doc/samtools-flagstat.html):
 
 ```
 samtools flagstat ind1_sorted.bam &> ind1_stats.txt
 ```
 
-
 ## Cleaning BAMs
 
 ### Basic cleaning
-For the advanced recombinant population, sorted BAM files for each individual were cleaned using ```Picard v2.22``` [(Broad Institute, 2018)](http://broadinstitute.github.io/picard/) CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0.
+For the advanced recombinant population, sorted BAM files for each individual were cleaned using ```Picard v2.22``` [(Broad Institute, 2018)](http://broadinstitute.github.io/picard/) CleanSam to softclip reads extending beyond the reference genome, and set unmapped quality scores to 0:
 
 ```
 java -Xmx2g -jar picard.jar CleanSam \
@@ -67,13 +65,13 @@ java -Xmx2g -jar picard.jar CleanSam \
 
 ### Marking PCR duplicates
 
-For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014)](https://academic.oup.com/bioinformatics/article/30/17/2503/2748175) was used with default parameters (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal.
+For natural population samples, ```samblaster v.0.1.24``` [(Faust and Hall, 2014)](https://academic.oup.com/bioinformatics/article/30/17/2503/2748175) was used with default parameters (using the option to work from a Samtools-sorted file) to mark PCR duplicates for removal:
 
 ```
 samblaster -M ind1_sorted.bam > ind1_mdup.cln.sorted.bam
 ```
 
-For recombinant population samples, ```Picard v2.22``` MarkDuplicates was used on default parameters (using the option to work from a sorted file) to mark PCR duplicates for removal.
+For MAGIC population samples, ```Picard v2.22``` MarkDuplicates was used on default parameters (using the option to work from a sorted file) to mark PCR duplicates for removal:
 
 ```
 java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDuplicates \
@@ -88,7 +86,7 @@ java -XX:ConcGCThreads=1 -XX:ParallelGCThreads=1 -Xmx4g -jar picard.jar MarkDupl
 ```
 
 ### Indexing BAMs
-Cleaned and sorted BAM files with PCR duplicates marked were then indexed using ```Samtools v1.3``` index function.
+Cleaned and sorted BAM files with PCR duplicates marked were then indexed using ```Samtools v1.3``` index function:
 
 ```
 samtools index ind1_mdup.cln.sorted.bam 
@@ -97,20 +95,20 @@ samtools index ind1_mdup.cln.sorted.bam
 ### Realigning around indels
 Regions around indels were realigned using ```GenomeAnalysisToolKit (GATK) v3.8``` [(Van der Auwera and O'Connor, 2020)](https://www.oreilly.com/library/view/genomics-in-the/9781491975183/) CreateSequenceDictionary.
 
-First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.22``` CreateSequenceDictionary.
+First, a 'dictionary file' of the *S. lautus* reference genome was created using ```Picard v2.22``` CreateSequenceDictionary:
 
 ```
 java -jar picard.jar CreateSequenceDictionary \
   -REFERENCE reference.fasta
 ```
 
-Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` faidx.
+Then, the *S. lautus* reference genome was indexed with ```Samtools v1.3``` faidx:
 
 ```
 samtools faidx reference.fasta
 ```
 
-Targets for realignment were identified using ```GATK v3.8``` RealignerTargetCreator.
+Targets for realignment were identified using ```GATK v3.8``` RealignerTargetCreator:
 
 ```
 java -jar GenomeAnalysisTK.jar \
@@ -122,7 +120,7 @@ java -jar GenomeAnalysisTK.jar \
 ```
 
 
-Finally, the realignment was performed with ```GATK v3.8``` IndelRealigner, using the targets for realignment, dictionary, and reference files generated in the previous steps.
+Finally, the realignment was performed with ```GATK v3.8``` IndelRealigner, using the targets for realignment, dictionary, and reference files generated in the previous steps:
 
 ```
 java -jar /home/uqralls1/programs/GATK/GenomeAnalysisTK.jar \
@@ -135,13 +133,13 @@ java -jar /home/uqralls1/programs/GATK/GenomeAnalysisTK.jar \
 
 ### Final index and validation of BAM files
 
-The final BAM files were indexed  using ```Samtools v1.3``` index function.
+The final BAM files were indexed  using ```Samtools v1.3``` index function:
 
 ```
 samtools index ind1_rln.mdup.cln.sorted.bam 
 ```
 
-Files were validated using ```Picard v2.22``` ValidateSamFile.
+Files were validated using ```Picard v2.22``` ValidateSamFile:
 
 ```
 java -jar /opt/biotools/picard/picard.jar ValidateSamFile \
@@ -199,13 +197,13 @@ angsd -bam [pop]-bam-paths.txt \
 
 * *doMajorMinor 3: uses pre-defined major and minor alleles from the snp-sites.txt file*
 
-This generated a [pop]-freq.mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 565 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll .tar.gz](Data%20files/alleleFreqsAll.tar.gz)
+This generated a [pop]-freq.mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 565 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll.tar.gz](Data%20files/alleleFreqsAll.tar.gz)
 
 # Genetic clustering of populations
 
 ## Phylogeny
 
-We generated a maximum likelihood phylogeny in ```IQ-TREE v1.6.12``` [(Nguyen et al., 2015)](https://pubmed.ncbi.nlm.nih.gov/25371430/) using the polymorphisms-aware phylogenetic model. We used sites that were variable across all populations and the MAGIC population with MAF > 0.05. We used custom R scripts to thin SNPs by retaining one unlinked SNP per auxin gene – to examine robustness of results, this was repeated five times to obtain five different sets of unlinked SNPs. Results remained consistent across the different sets. Input files: [Phylogeny input](Data%20files/Phylogeny input)
+We generated a maximum likelihood phylogeny in ```IQ-TREE v1.6.12``` [(Nguyen et al., 2015)](https://pubmed.ncbi.nlm.nih.gov/25371430/) using the polymorphisms-aware phylogenetic model. We used sites that were variable across all populations and the MAGIC population with MAF > 0.05. We used custom R scripts to thin SNPs by retaining one unlinked SNP per auxin gene – to examine robustness of results, this was repeated five times to obtain five different sets of unlinked SNPs. Results remained consistent across the different sets. Input files: [Phylogeny input](Data%20files/Phylogeny%20input)
 
 We first used ```ModelFinder``` [(Kalyaanamoorthy et al., 2017)]( https://www.nature.com/articles/nmeth.4285) to determine the best-fit substitution model for the data:
 
@@ -253,10 +251,11 @@ PCA:
 ```
 pcangsd -b allGenoLike.beagle.gz -o PCAunlinked
 ```
-This generated the covariance matrix for the PCA (PCAunlinked.cov), which was plotted in R. R code:
+This generated the covariance matrix for the PCA (PCAunlinked.cov), which was plotted in R:
 ```
 # Read the covariance file as a matrix
 cov <- as.matrix(read.table("path-to-file/PCAunlinked.cov"))
+
 # Compute the eigenvalues and eigenvectors
 eig <- eigen(C)
 
@@ -325,7 +324,7 @@ For each locality we visually examined which PC best separated the two populatio
 
 ![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityPCAs.png?raw=true)
 
-For LH we chose PC2, PC2 for CB, and PC1 for CH.  
+For Lennox Head we chose PC2, PC2 for Cabarita Beach, and PC1 for Coffs Harbour.  
 
 We used R to calculate the outliers for each locality. R code (shown for LH population pair):
 
@@ -340,7 +339,7 @@ qqchi<-function(x,...){
   legend("topleft",paste("lambda=",lambda))
 }
 
-#Set working directory
+# Set working directory
 setwd("-path-to-working-directory")
 
 # Read in selection statistics (chi2 distributed)
@@ -359,7 +358,8 @@ LH-sites <- seq(1, dim(LH-s)[1], by=1)
 plot(-log10(LH-pval[,2])~LH-sites, xlab = "Sites",ylab = "-log10 P-value", main = "Manhattan plot")
 
 # Put in an outlier line, that's 2.7 (corresponding to a P-value of 0.002). We considers SNPs as highly differentiated if they fell above this line
-abline(2.7, 0, col="red"). 
+abline(2.7, 0, col="red")
+
 ```
 
 Manhattan plots for each locality:
@@ -368,7 +368,7 @@ Manhattan plots for each locality:
 
 ## BayeScan
 
-We undertook ```BayeScan v2.1``` for the natural populations per locality on sites with a MAF > 0.05. We used custom R scripts and excel to generate the BayeScan input files: [BayeScan input](Data%20files/BayeScan input)
+We undertook ```BayeScan v2.1``` for the natural populations per locality on sites with a MAF > 0.05. We used custom R scripts and excel to generate the BayeScan input files: [BayeScan input](Data%20files/BayeScan%20input)
 ```
 bayescan_2.1 [locality]-BayeScan.txt -threads 24 -pr_odds 10 -o [locality] 
 ```
@@ -377,9 +377,14 @@ bayescan_2.1 [locality]-BayeScan.txt -threads 24 -pr_odds 10 -o [locality]
 We plotted the results per population using the [(plot_R.r)]( https://github.com/mfoll/BayeScan/blob/master/R_functions/plot_R.r) R script. We categorized SNPs as highly differentiated if they contained a Q-value (the False Discovery Rate analogue of the P-value) < 0.05. R code:
 
 ```
+# Set directory of R script
 source("path-to-file/plot_R.r")
+
+# Set working directory
 setwd("path-to-BayeScan-output")
-plot_bayescan("[locality]",FDR=0.05)
+
+# Output outliers, based on a false discovery rate of 0.05
+plot_bayescan("[locality]", FDR = 0.05)
 ```
 
 This produced a list of outlier SNPs per locality.
