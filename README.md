@@ -292,9 +292,9 @@ angsd 	-bam [locality]-bam-paths.txt \
 	-minMapQ 30 \
 	-minQ 20 \
 	-nThreads 10 \
+```
 
 * *SNP_pval 1e-6: P-value for defining a SNP*
-```
 
 Calculate selection statistics for each SNP among individuals without defining disjoint groups:
 
@@ -307,6 +307,7 @@ We used R to plot the PCAs per locality. R code (shown for LH population pair):
 ```
 # Read the covariance file as a matrix
 LH-cov <- as.matrix(read.table("path-to-file/LH.cov"))
+
 # Compute the eigenvalues and eigenvectors
 LH-eig <- eigen(C)
 
@@ -441,7 +442,7 @@ Calculate thetas for each site:
 
 ```
 angsd -pest [pop].sfs \
-	-bam [POP]-bam-paths.txt \
+	-bam [pop]-bam-paths.txt \
 	-anc Senecio.contigs.fasta \
 	-rf gene-regions.txt \
 	-doThetas 1 \
