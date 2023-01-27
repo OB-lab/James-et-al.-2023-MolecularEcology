@@ -322,7 +322,7 @@ plot(eig$vectors[,3:4],col=pop[,1], pch=pop[,2], xlab="PC3",ylab="PC4")
 ```
 For each locality we visually examined which PC best separated the two populations (orange = Dune ecotype, green = Headland ecotype). 
 
-![image](Images/PerLocalityPCAs.jpeg?raw=true "Title")
+![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityPCAs.jpg?raw=true)
 
 For LH we chose PC2, PC2 for CB, and PC1 for CH.  
 
@@ -363,7 +363,7 @@ abline(2.7, 0, col="red").
 
 Manhattan plots for each locality:
 
-![image](Images/PerLocalityManhattan.jpeg?raw=true "Title")
+![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityManhattan.jpg?raw=true)
 
 ## BayeScan
 
