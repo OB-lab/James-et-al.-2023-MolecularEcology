@@ -171,7 +171,7 @@ angsd -bam bam-file-paths.txt \
 
 *Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):*
 * *bam bam-file-paths.txt: the paths to all bam files (natural and MAGIC populations)*
-* *rf gene-regions.txt: the regions of the auxin genes(contig:start-finish) *
+* *rf gene-regions.txt: the regions of the auxin genes(contig:start-finish)*
 * *GL 2: calculates genotype likelihood with the GATK method*
 * *doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to determine)*
 * *doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles*
@@ -197,7 +197,7 @@ angsd -bam [pop]-bam-paths.txt \
       -nThreads 24
 ```
 
-* * doMajorMinor 3: uses pre-defined major and minor alleles from the snp-sites.txt file*
+* *doMajorMinor 3: uses pre-defined major and minor alleles from the snp-sites.txt file*
 
 This generated a [pop]-freq.mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 565 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll .tar.gz](Data%20files/alleleFreqsAll.tar.gz)
 
@@ -221,8 +221,8 @@ Tree construction:
 iqtree-linux -s countsAllUnlinked-1.txt -m TVMe+FQ+P+N9 -nt 10 -bb 10000 -alrt 10000 -pre unlinked1-run1
 ```
 
-* *bb 10000: 10,000 replicates of UFboot *
-* *alrt 10000: 10,000 replicates of SH-aLRT *
+* *bb 10000: 10,000 replicates of UFboot*
+* *alrt 10000: 10,000 replicates of SH-aLRT*
 
 To assess convergence, we undertook ten separate runs of ```IQ-TREE``` for each unlinked dataset and examined tree topology (which remained unchanged across the ten independent runs). We also ensured that the log-likelihood values were stable at the end of each run.
 
@@ -322,7 +322,7 @@ plot(eig$vectors[,3:4],col=pop[,1], pch=pop[,2], xlab="PC3",ylab="PC4")
 ```
 For each locality we visually examined which PC best separated the two populations (orange = Dune ecotype, green = Headland ecotype). 
 
-![Alt text](Images/PerLocalityPCAs.pdf?raw=true "Title")
+![Alt text](Images/PerLocalityPCAs.jpeg?raw=true "Title")
 
 For LH we chose PC2, PC2 for CB, and PC1 for CH.  
 
@@ -363,7 +363,7 @@ abline(2.7, 0, col="red").
 
 Manhattan plots for each locality:
 
-![Alt text](Images/PerLocalityManhattan.pdf?raw=true "Title")
+![Alt text](Images/PerLocalityManhattan.jpeg?raw=true "Title")
 
 # BayeScan
 
@@ -371,7 +371,7 @@ We undertook ```BayeScan v2.1``` for the natural populations per locality on sit
 ```
 bayescan_2.1 [locality]-BayeScan.txt -threads 24 -pr_odds 10 -o [locality] 
 ```
-* *pr_odds 10: prior odds of 10, meaning the neutral model is ten times more likely than the model with selection (as recommended for datasets of our size) *
+* *pr_odds 10: prior odds of 10, meaning the neutral model is ten times more likely than the model with selection (as recommended for datasets of our size)*
 
 We plotted the results per population using the [(plot_R.r)]( https://github.com/mfoll/BayeScan/blob/master/R_functions/plot_R.r) R script. We categorized SNPs as highly differentiated if they contained a Q-value (the False Discovery Rate analogue of the P-value) < 0.05. R code:
 
@@ -412,6 +412,7 @@ phyper(85, 179, 386, 145, lower.tail=FALSE)
 To identify molecular signatures of selection we used ```ANGSD``` to calculate Tajima’s D for each gene-region per population. The following code was run separately per population. 
 
 Calculate the site allele frequency spectrum:
+
 ```
 angsd -bam [pop]-bam-paths.txt \
 	-doSaf 1 \
@@ -427,6 +428,7 @@ angsd -bam [pop]-bam-paths.txt \
 	-doMajorMinor 1 \
 	-underFlowProtect 1 \
 ```
+
 This produces a .saf.idx file. 
 
 Obtain the folded estimate of the site allele frequency spectrum:
