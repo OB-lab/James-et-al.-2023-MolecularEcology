@@ -322,7 +322,7 @@ plot(eig$vectors[,3:4],col=pop[,1], pch=pop[,2], xlab="PC3",ylab="PC4")
 ```
 For each locality we visually examined which PC best separated the two populations (orange = Dune ecotype, green = Headland ecotype). 
 
-![Alt text](Images/PerLocalityPCAs.jpeg?raw=true "Title")
+![image](Images/PerLocalityPCAs.jpeg?raw=true "Title")
 
 For LH we chose PC2, PC2 for CB, and PC1 for CH.  
 
@@ -363,7 +363,7 @@ abline(2.7, 0, col="red").
 
 Manhattan plots for each locality:
 
-![Alt text](Images/PerLocalityManhattan.jpeg?raw=true "Title")
+![image](Images/PerLocalityManhattan.jpeg?raw=true "Title")
 
 # BayeScan
 
@@ -463,4 +463,3 @@ thetaStat do_stat [pop].TajD.idx
 ```
 
 Using custom R scripts we combined the output files per population. Tajima’s D values are found in the [genesAllSummary.txt](Data%20files/genesAllSummary.txt) file.
-![image](https://user-images.githubusercontent.com/38741988/215006733-ba899e78-f726-4184-b807-679034939a68.png)
