@@ -201,9 +201,9 @@ angsd -bam [pop]-bam-paths.txt \
 
 This generated a [pop]-freq.mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 565 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll .tar.gz](Data%20files/alleleFreqsAll.tar.gz)
 
-## Genetic clustering of populations
+# Genetic clustering of populations
 
-# Phylogeny
+## Phylogeny
 
 We generated a maximum likelihood phylogeny in ```IQ-TREE v1.6.12``` [(Nguyen et al., 2015)](https://pubmed.ncbi.nlm.nih.gov/25371430/) using the polymorphisms-aware phylogenetic model. We used sites that were variable across all populations and the MAGIC population with MAF > 0.05. We used custom R scripts to thin SNPs by retaining one unlinked SNP per auxin gene – to examine robustness of results, this was repeated five times to obtain five different sets of unlinked SNPs. Results remained consistent across the different sets. Input files: [Phylogeny input](Data%20files/Phylogeny input)
 
@@ -226,7 +226,7 @@ iqtree-linux -s countsAllUnlinked-1.txt -m TVMe+FQ+P+N9 -nt 10 -bb 10000 -alrt 1
 
 To assess convergence, we undertook ten separate runs of ```IQ-TREE``` for each unlinked dataset and examined tree topology (which remained unchanged across the ten independent runs). We also ensured that the log-likelihood values were stable at the end of each run.
 
-# PCA
+## PCA
 
 We explored the genetic clustering of populations using ```PCAngsd v1.10``` [(Meisner and Albrechtsen, 2018)]( https://pubmed.ncbi.nlm.nih.gov/30131346/). We used the same unlinked dataset as the phylogeny above. 
 
@@ -269,11 +269,11 @@ pop <- read.table("path-to-file-/IndPopCols.txt")
 # Plot the PCA
 plot(eig$vectors[,1:2],col=pop[,1], pch=pop[,2], xlab="PC1",ylab="PC2")
 ```
-## Detection of outlier SNPs
+# Detection of outlier SNPs
 
 For the natural populations, we used three approaches to detect outlier SNPs separately for each locality: ```PCAngsd```, ```BayeScan```, and the top 1% of SNPs with the highest change in allele frequencies between the Dune and Headland. For the MAGIC population, we only used the top 1% of SNPs with the highest change in allele frequencies between the two tails of the gravitropic distribution. 
 
-# PCAngsd
+## PCAngsd
 
 We undertook ```PCAngsd``` for the natural populations per locality. 
 
@@ -365,7 +365,7 @@ Manhattan plots for each locality:
 
 ![image](Images/PerLocalityManhattan.jpeg?raw=true "Title")
 
-# BayeScan
+## BayeScan
 
 We undertook ```BayeScan v2.1``` for the natural populations per locality on sites with a MAF > 0.05. We used custom R scripts and excel to generate the BayeScan input files: [BayeScan input](Data%20files/BayeScan input)
 ```
@@ -383,7 +383,7 @@ plot_bayescan("[locality]",FDR=0.05)
 
 This produced a list of outlier SNPs per locality.
 
-# Top 1%
+## Top 1%
 
 We calculated the absolute allele frequency difference (|∆p|) for each allele between the Dune and Headland ecotypes at each locality and only considered sites with a MAF > 0.05 per locality. We classified SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile at each locality (corresponding to |∆p| ≥ 0.63 for Lennox Head, |∆p| ≥ 0.53 for Cabarita Beach and |∆p| ≥ 0.52 for Coffs Harbour). For the MAGIC population We calculated the absolute allele frequency difference (|∆p|) for each allele between the agravitropic and gravitropic tails, and we considered SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile (corresponding to |∆p| ≥ 0.18); we refer to these SNPs as ‘architecture SNPs’.
 
@@ -407,7 +407,7 @@ To calculate whether the number of shared outlier SNPs and genes between populat
 phyper(85, 179, 386, 145, lower.tail=FALSE)
 ```
 
-## Molecular signatures of selection
+# Molecular signatures of selection
 
 To identify molecular signatures of selection we used ```ANGSD``` to calculate Tajima’s D for each gene-region per population. The following code was run separately per population. 
 
