@@ -322,7 +322,7 @@ plot(eig$vectors[,3:4],col=pop[,1], pch=pop[,2], xlab="PC3",ylab="PC4")
 ```
 For each locality we visually examined which PC best separated the two populations (orange = Dune ecotype, green = Headland ecotype). 
 
-![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityPCAs.pdf?raw=true)
+![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityPCAs.png?raw=true)
 
 For LH we chose PC2, PC2 for CB, and PC1 for CH.  
 
