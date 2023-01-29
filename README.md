@@ -3,7 +3,7 @@
 Sequencing data files generated at each step of this process will be available on The University of Queensland Research Data Manager repository at the time of publication.
 
 # Bioinformatics
-Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage. Samples were plated randomly with respect to Dune/Headland ecotype (for natural population samples) or gravitropic/agravitropic status (for MAGIC samples). X lanes were used.
+Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage. Samples were plated randomly with respect to Dune/Headland ecotype (for natural population samples) or gravitropic/agravitropic status (for MAGIC samples).
 
 ##### A note on differences in processing of natural and recombinant population data
 The bioinformatic processing of these datasets (natural populations and MAGIC populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor file cleaning/processing steps where the pipelines diverge or use different programs reflects only personal tool preferences.
@@ -169,7 +169,7 @@ angsd -bam bam-file-paths.txt \
 
 *Parameter notes (more information available in [ANGSD documentation](http://www.popgen.dk/angsd/index.php/ANGSD)):*
 * *bam bam-file-paths.txt: the paths to all bam files (natural and MAGIC populations)*
-* *rf gene-regions.txt: the regions of the auxin genes(contig:start-finish)*
+* *rf gene-regions.txt: the regions of the auxin genes (contig:start-finish)*
 * *GL 2: calculates genotype likelihood with the GATK method*
 * *doMaf 2: assumes fixed major allele inferred from genotype likelihoods (GLs), unknown minor (sums GLs of alleles to determine)*
 * *doMajorMinor 1: uses a maximum likelihood approach to choose major and minor alleles*
@@ -177,7 +177,7 @@ angsd -bam bam-file-paths.txt \
 * *minMapQ 30: minimum mapping quality of 30*
 * *minQ 20: minimum per-base quality of 20*
 
-This generates snp-sites.txt, which contains the major and minor alleles across all populations for all sites in the auxin gene-regions. Allele frequencies were then called for each population separately (i.e., each of the six natural populations and each tail of the MAGIC population).
+This generated the snp-sites.txt file, containing the major and minor alleles across all populations for all sites in the auxin gene-regions. Allele frequencies were then called for each population separately (i.e., each of the six natural populations and each tail of the MAGIC population).
 
 Calling allele frequencies (done separately per population):
 
@@ -197,13 +197,13 @@ angsd -bam [pop]-bam-paths.txt \
 
 * *doMajorMinor 3: uses pre-defined major and minor alleles from the snp-sites.txt file*
 
-This generated a [pop]-freq.mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 565 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll.tar.gz](Data%20files/alleleFreqsAll.tar.gz)
+This generated a allele frequency .mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 565 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll.tar.gz](Data%20files/alleleFreqsAll.tar.gz)
 
 # Genetic clustering of populations
 
 ## Phylogeny
 
-We generated a maximum likelihood phylogeny in ```IQ-TREE v1.6.12``` [(Nguyen et al., 2015)](https://pubmed.ncbi.nlm.nih.gov/25371430/) using the polymorphisms-aware phylogenetic model. We used sites that were variable across all populations and the MAGIC population with MAF > 0.05. We used custom R scripts to thin SNPs by retaining one unlinked SNP per auxin gene – to examine robustness of results, this was repeated five times to obtain five different sets of unlinked SNPs. Results remained consistent across the different sets. Input files: [Phylogeny input](Data%20files/Phylogeny%20input)
+We generated a maximum likelihood phylogeny in ```IQ-TREE v1.6.12``` [(Nguyen et al., 2015)](https://pubmed.ncbi.nlm.nih.gov/25371430/) using the polymorphisms-aware phylogenetic model. We used sites that were variable across all natural populations and the MAGIC population with MAF > 0.05. We used custom R scripts to thin SNPs by retaining one unlinked SNP per auxin gene – to examine robustness of results, this was repeated five times to obtain five different sets of unlinked SNPs. Results remained consistent across the different sets. Input files: [Phylogeny input](Data%20files/Phylogeny%20input)
 
 We first used ```ModelFinder``` [(Kalyaanamoorthy et al., 2017)]( https://www.nature.com/articles/nmeth.4285) to determine the best-fit substitution model for the data:
 
@@ -224,9 +224,9 @@ iqtree-linux -s countsAllUnlinked-1.txt -m TVMe+FQ+P+N9 -nt 10 -bb 10000 -alrt 1
 
 To assess convergence, we undertook ten separate runs of ```IQ-TREE``` for each unlinked dataset and examined tree topology (which remained unchanged across the ten independent runs). We also ensured that the log-likelihood values were stable at the end of each run.
 
-## PCA
+## Pincipal Component Analysis
 
-We explored the genetic clustering of populations using ```PCAngsd v1.10``` [(Meisner and Albrechtsen, 2018)]( https://pubmed.ncbi.nlm.nih.gov/30131346/). We used the same unlinked dataset as the phylogeny above. 
+We explored the genetic clustering of populations using ```PCAngsd v1.10``` [(Meisner and Albrechtsen, 2018)]( https://pubmed.ncbi.nlm.nih.gov/30131346/). We used the same unlinked SNP dataset as used for the phylogeny above. 
 
 Estimate genotype likelihoods:
 
@@ -244,7 +244,7 @@ angsd	-bam bam-file-paths.txt \
 	-nThreads 10
 ```
 
-This generated the beagle file to use for the PCA.
+This generated the beagle file to use for the Pincipal Component Analysis (PCA).
 
 PCA:
 
@@ -295,7 +295,7 @@ angsd 	-bam [locality]-bam-paths.txt \
 
 * *SNP_pval 1e-6: P-value for defining a SNP*
 
-Calculate selection statistics for each SNP among individuals without defining disjoint groups:
+We then calculated selection statistics for each SNP among individuals without defining disjoint groups:
 
 ```
 pcangsd -b [locality]GenoLike.beagle.gz -o [locality] --selection --sites_save
@@ -320,11 +320,11 @@ pop <- read.table("path-to-file-/LH-IndPopCols.txt")
 plot(eig$vectors[,1:2],col=pop[,1], pch=pop[,2], xlab="PC1",ylab="PC2")
 plot(eig$vectors[,3:4],col=pop[,1], pch=pop[,2], xlab="PC3",ylab="PC4")
 ```
-For each locality we visually examined which PC best separated the two populations (orange = Dune ecotype, green = Headland ecotype). 
+For each locality we visually examined which principal component (PC) best separated the two populations (orange = Dune ecotype, green = Headland ecotype). 
 
 ![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityPCAs.png?raw=true)
 
-For Lennox Head we chose PC2, PC2 for Cabarita Beach, and PC1 for Coffs Harbour.  
+We chose PC2 for Lennox Head, PC2 for Cabarita Beach, and PC1 for Coffs Harbour.  
 
 We used R to calculate the outliers for each locality. R code (shown for LH population pair):
 
