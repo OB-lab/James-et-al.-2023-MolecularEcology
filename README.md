@@ -436,15 +436,13 @@ angsd -bam [pop]-bam-paths.txt \
 	-underFlowProtect 1 \
 ```
 
-This produces a .saf.idx file. 
-
-Obtain the folded estimate of the site allele frequency spectrum:
+This produced a .saf.idx file, which was then used to obtain the folded estimate of the site allele frequency spectrum:
 
 ```
 realSFS [pop].saf.idx' -P 24 -fold 1 > [pop].sfs
 ```
 
-Calculate thetas for each site:
+Using the site allele frequency spectrum, thetas were then calculated for each site:
 
 ```
 angsd -pest [pop].sfs \
@@ -463,7 +461,7 @@ angsd -pest [pop].sfs \
 	-out [pop]
 ```
 
-Calculate Tajima’s D:
+Tajima’s D were calculated per population:
 
 ```
 thetaStat do_stat [pop].TajD.idx 
