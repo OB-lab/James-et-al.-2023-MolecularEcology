@@ -324,7 +324,7 @@ For each locality we visually examined which principal component (PC) best separ
 
 ![alt text](https://github.com/OB-lab/James-et-al.-submission-to-Current-Biology/blob/main/Images/PerLocalityPCAs.png?raw=true)
 
-We chose PC2 for Lennox Head, PC2 for Cabarita Beach, and PC1 for Coffs Harbour.  
+We chose PC2 for Lennox Head (LH), PC2 for Cabarita Beach, and PC1 for Coffs Harbour.  
 
 We used R to calculate the outliers for each locality. R code (shown for LH population pair):
 
@@ -345,7 +345,7 @@ setwd("-path-to-working-directory")
 # Read in selection statistics (chi2 distributed)
 LH-s <- npyLoad("LH.selection.npy")
 
-# Make QQ plot to QC the test statistics
+# Make QQ plot to quality control the test statistics
 qqchi(LH-s)
 
 # Convert test statistics to P-values
@@ -357,7 +357,7 @@ LH-sites <- seq(1, dim(LH-s)[1], by=1)
 # Make Manhattan plot, using PC2 (as it distinguished the ecotypes in the above PCs)
 plot(-log10(LH-pval[,2])~LH-sites, xlab = "Sites",ylab = "-log10 P-value", main = "Manhattan plot")
 
-# Put in an outlier line, that's 2.7 (corresponding to a P-value of 0.002). We considers SNPs as highly differentiated if they fell above this line
+# Add an outlier line at 2.7 (corresponding to a P-value of 0.002). We considers SNPs as highly differentiated if they fell above this line
 abline(2.7, 0, col="red")
 
 ```
@@ -368,7 +368,7 @@ Manhattan plots for each locality:
 
 ## BayeScan
 
-We undertook ```BayeScan v2.1``` for the natural populations per locality on sites with a MAF > 0.05. We used custom R scripts and excel to generate the BayeScan input files: [BayeScan input](Data%20files/BayeScan%20input)
+We undertook ```BayeScan v2.1``` [(Foll and Gaggiotti, 2008) (https://pubmed.ncbi.nlm.nih.gov/18780740/)] for the natural populations per locality on sites with a MAF > 0.05. We used custom R scripts and Microsoft Excel to generate the BayeScan input files: [BayeScan input](Data%20files/BayeScan%20input)
 ```
 bayescan_2.1 [locality]-BayeScan.txt -threads 24 -pr_odds 10 -o [locality] 
 ```
@@ -391,18 +391,19 @@ This produced a list of outlier SNPs per locality.
 
 ## Top 1%
 
-We calculated the absolute allele frequency difference (|∆p|) for each allele between the Dune and Headland ecotypes at each locality and only considered sites with a MAF > 0.05 per locality. We classified SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile at each locality (corresponding to |∆p| ≥ 0.63 for Lennox Head, |∆p| ≥ 0.53 for Cabarita Beach and |∆p| ≥ 0.52 for Coffs Harbour). For the MAGIC population We calculated the absolute allele frequency difference (|∆p|) for each allele between the agravitropic and gravitropic tails, and we considered SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile (corresponding to |∆p| ≥ 0.18); we refer to these SNPs as ‘architecture SNPs’.
+We calculated the absolute allele frequency difference (|∆p|) for each allele between the Dune and Headland ecotypes at each locality, and only considered sites with a MAF > 0.05 per locality. We classified SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile at each locality (corresponding to |∆p| ≥ 0.63 for Lennox Head, |∆p| ≥ 0.53 for Cabarita Beach and |∆p| ≥ 0.52 for Coffs Harbour). For the MAGIC population, we calculated the absolute allele frequency difference (|∆p|) for each allele between the agravitropic and gravitropic tails, and we considered SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile (corresponding to |∆p| ≥ 0.18); we refer to these SNPs as ‘architecture SNPs’.
 
 # Summary of outlier SNPs
 
-For each locality of the natural populations, we considered a SNP as an outlier if it was detected as highly differentiated in at least one of the three above approaches. For the highly stringent dataset, SNPs were outliers if they were highly differentiated in at least two of the three approaches. For each locality we considered a gene as an outlier if it contained at least one outlier SNP. We compared the number of common outlier SNPs and genes across the three localities, and classified a SNP or gene as ‘parallel’ if it was an outlier in all three localities; we refer to these as ‘parallel SNPs’ and ‘parallel genes’, respectively. 
+For each locality of the natural populations, we considered a SNP as an outlier if it was detected as highly differentiated in at least one of the three above approaches. For the highly stringent dataset, SNPs were considered outliers if they were highly differentiated in at least two of the three approaches. For each locality we considered a gene as an outlier if it contained at least one outlier SNP. We compared the number of common outlier SNPs and genes across the three localities, and classified a SNP or gene as ‘parallel’ if it was an outlier in all three localities; we refer to these as ‘parallel SNPs’ and ‘parallel genes’, respectively. 
 
-Summary file of the SNPs across the natural populations and the MAGIC population: [alleleFreqsAllSummary.tar.gz](Data%20files/alleleFreqsAllSummary.tar.gz)
-Summary file of the genes across the natural populations and the MAGIC population: [genesAllSummary.txt](Data%20files/genesAllSummary.txt)
+Summary file of the SNPs across the natural populations and the MAGIC population: [alleleFreqsAllSummary.tar.gz](Data%20files/alleleFreqsAllSummary.tar.gz) <br>
+Summary file of the genes across the natural populations and the MAGIC population: [genesAllSummary.txt](Data%20files/genesAllSummary.txt) <br>
+
 To calculate whether the number of shared outlier SNPs and genes between populations was greater than expected by chance, we used a hypergeometric distribution function, phyper, in R:
 
 ```
-# Calculation of the shared outlier genes between LH and CB
+# Calculation of the shared outlier genes between Lennox Head and Cabarita Beach
 
 # phyper (q, m, n, k...)
 # q = size of overlap minus 1
@@ -468,4 +469,4 @@ Calculate Tajima’s D:
 thetaStat do_stat [pop].TajD.idx 
 ```
 
-Using custom R scripts we combined the output files per population. Tajima’s D values are found in the [genesAllSummary.txt](Data%20files/genesAllSummary.txt) file.
+Using custom R scripts, we combined the output files per population. Tajima’s D values are found in the [genesAllSummary.txt](Data%20files/genesAllSummary.txt) file.
