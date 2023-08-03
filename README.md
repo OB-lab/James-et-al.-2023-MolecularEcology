@@ -197,7 +197,7 @@ angsd -bam [pop]-bam-paths.txt \
 
 * *doMajorMinor 3: uses pre-defined major and minor alleles from the snp-sites.txt file*
 
-This generated a allele frequency .mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 565 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll.tar.gz](Data%20files/alleleFreqsAll.tar.gz)
+This generated a allele frequency .mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 538 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll.tar.gz](Data%20files/alleleFreqsAll.tar.gz)
 
 # Genetic clustering of populations
 
@@ -224,7 +224,7 @@ iqtree-linux -s countsAllUnlinked-1.txt -m TVMe+FQ+P+N9 -nt 10 -bb 10000 -alrt 1
 
 To assess convergence, we undertook ten separate runs of ```IQ-TREE``` for each unlinked dataset and examined tree topology (which remained unchanged across the ten independent runs). We also ensured that the log-likelihood values were stable at the end of each run.
 
-## Pincipal Component Analysis
+## Principal Component Analysis
 
 We explored the genetic clustering of populations using ```PCAngsd v1.10``` [(Meisner and Albrechtsen, 2018)]( https://pubmed.ncbi.nlm.nih.gov/30131346/). We used the same unlinked SNP dataset as used for the phylogeny above. 
 
@@ -268,9 +268,9 @@ pop <- read.table("path-to-file-/IndPopCols.txt")
 # Plot the PCA
 plot(eig$vectors[,1:2],col=pop[,1], pch=pop[,2], xlab="PC1",ylab="PC2")
 ```
-# Detection of outlier SNPs
+# Detection of outlier SNPs for the natural populations
 
-For the natural populations, we used three approaches to detect outlier SNPs separately for each locality: ```PCAngsd```, ```BayeScan```, and the top 1% of SNPs with the highest change in allele frequencies between the Dune and Headland. For the MAGIC population, we only used the top 1% of SNPs with the highest change in allele frequencies between the two tails of the gravitropic distribution. 
+For the natural populations, we used three approaches to detect outlier SNPs separately for each locality: ```PCAngsd```, ```BayeScan```, and the top 1% of SNPs with the highest change in allele frequencies between the Dune and Headland.
 
 ## PCAngsd
 
@@ -391,11 +391,25 @@ This produced a list of outlier SNPs per locality.
 
 ## Top 1%
 
-We calculated the absolute allele frequency difference (|∆p|) for each allele between the Dune and Headland ecotypes at each locality, and only considered sites with a MAF > 0.05 per locality. We classified SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile at each locality (corresponding to |∆p| ≥ 0.63 for Lennox Head, |∆p| ≥ 0.53 for Cabarita Beach and |∆p| ≥ 0.52 for Coffs Harbour). For the MAGIC population, we calculated the absolute allele frequency difference (|∆p|) for each allele between the agravitropic and gravitropic tails, and we considered SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile (corresponding to |∆p| ≥ 0.18); we refer to these SNPs as ‘architecture SNPs’.
+We calculated the absolute allele frequency difference (|∆p|) for each allele between the Dune and Headland ecotypes at each locality, and only considered sites with a MAF > 0.05 per locality. We classified SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile at each locality (corresponding to |∆p| ≥ 0.63 for Lennox Head, |∆p| ≥ 0.53 for Cabarita Beach and |∆p| ≥ 0.52 for Coffs Harbour).
+
+# Detection of outlier SNPs for the MAGIC population
+
+For the MAGIC population, we  used a combination of Fisher's Exact Test and the top 1% of SNPs with the highest change in allele frequencies between the two tails of the gravitropic distribution. We also explored the relationship between Fisher's Exact Test and the G-statistic
+
+## Fisher's Exact Test
+
+We implemented Fisher's Exact Test by first constructing a 2x2 contingency table of the allele counts for the upper and lower tails for each SNP. We then performed the Fisher's Exact Test in R with the ```fisher.test``` function. To correct for multiple testing, we applied the Benjamini-Hochberg procedure with the ```p.adjust``` function, which effectively controls the false discovery rate. We classified SNPs as highly differentiated if they had an adjusted P-value of less than 0.05. We also calculated the G-statistic by using the ```GTest``` function in R to explore it's relationship with the Fisher's Exact Test. 
+
+## Top 1%
+
+We calculated the absolute allele frequency difference (|∆p|) for each allele between the agravitropic and gravitropic tails, and we considered SNPs as highly differentiated if they had an allele frequency difference in the top 1% quantile (corresponding to |∆p| ≥ 0.18).
 
 # Summary of outlier SNPs
 
-For each locality of the natural populations, we considered a SNP as an outlier if it was detected as highly differentiated in at least one of the three above approaches. For the highly stringent dataset, SNPs were considered outliers if they were highly differentiated in at least two of the three approaches. For each locality we considered a gene as an outlier if it contained at least one outlier SNP. We compared the number of common outlier SNPs and genes across the three localities, and classified a SNP or gene as ‘parallel’ if it was an outlier in all three localities; we refer to these as ‘parallel SNPs’ and ‘parallel genes’, respectively. 
+For each locality of the natural populations, we considered a SNP as an outlier if it was detected as highly differentiated in at least one of the three above approaches. For the stringent dataset, SNPs were considered outliers if they were highly differentiated in at least two of the three approaches. For each locality we considered a gene as an outlier if it contained at least one outlier SNP. We compared the number of common outlier SNPs and genes across the three localities, and classified a SNP or gene as ‘parallel’ if it was an outlier in all three localities; we refer to these as ‘parallel SNPs’ and ‘parallel genes’, respectively. 
+
+For the MAGIC population, we considered a SNP as an outlier if it was detected as highly differentiated in at least two of the three above approaches; we refer to these SNPs as ‘architecture SNPs’. For the stringent dataset, SNPs were considered outliers if they were highly differentiated in both approaches. We considered a gene as an outlier if it contained at least one outlier SNP. 
 
 Summary file of the SNPs across the natural populations and the MAGIC population: [alleleFreqsAllSummary.tar.gz](Data%20files/alleleFreqsAllSummary.tar.gz) <br>
 Summary file of the genes across the natural populations and the MAGIC population: [genesAllSummary.txt](Data%20files/genesAllSummary.txt) <br>
@@ -411,7 +425,7 @@ To calculate whether the number of shared outlier SNPs and genes between populat
 # n = total # of genes minus m
 # k = #outliers in group 2
 
-phyper(85, 179, 386, 145, lower.tail=FALSE)
+phyper(85, 179, 359, 145, lower.tail=FALSE)
 ```
 
 # Molecular signatures of selection
