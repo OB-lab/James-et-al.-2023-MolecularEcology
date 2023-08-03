@@ -197,7 +197,7 @@ angsd -bam [pop]-bam-paths.txt \
 
 * *doMajorMinor 3: uses pre-defined major and minor alleles from the snp-sites.txt file*
 
-This generated a allele frequency .mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 538 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail. File: [alleleFreqsAll.tar.gz](Data%20files/alleleFreqsAll.tar.gz)
+This generated a allele frequency .mafs file per population. Custom R scripts (available upon request) were used to combine files from each population together. We retained sites if they were sampled in at least three individuals in each natural population and at least five individuals in each tail of the MAGIC population, in which 538 auxin genes were retained. To filter for a MAF > 0.05 while retaining invariant sites, we used custom R scripts to replace all allele frequencies that are less than 0.05 with 0, which was done per population or tail.
 
 # Genetic clustering of populations
 
