@@ -5,7 +5,7 @@ Sequencing data files generated at each step of this process will be available o
 # Bioinformatics
 Sequencing was conducted by the Beijing Genomics Institute (BGI) using the DNBseq platform to produce 100bp paired-end reads at approximately ~5X coverage. Samples were plated randomly with respect to Dune/Headland ecotype (for natural population samples) or gravitropic/agravitropic status (for MAGIC samples).
 
-##### A note on differences in processing of natural and recombinant population data
+##### A note on differences in processing of natural and MAGIC population data
 The bioinformatic processing of these datasets (natural populations and MAGIC populations) was conducted by different researchers at separate times. Extremely similar pipelines were used overall, with common programs used for all major steps, as is evidenced below. The few minor file cleaning/processing steps where the pipelines diverge or use different programs reflects only personal tool preferences.
 
 ## Quality filtering
